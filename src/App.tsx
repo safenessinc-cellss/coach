@@ -1,36 +1,4 @@
-<nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] md:w-[90%] max-w-4xl">
-  <div className="glass rounded-full px-4 md:px-6 py-3 flex justify-between items-center border border-white/10">
-    {/* LOGO CORPORATIVO */}
-    <div className="flex items-center gap-3">
-      <img 
-        src="/images/logo-robert-teran.png" 
-        alt="Robert Teran - Coach Empresarial" 
-        className="w-12 h-12 object-contain rounded-lg"
-      />
-      <div className="hidden sm:block">
-        <p className="text-xs font-bold text-white leading-tight">ROBERT TERAN</p>
-        <p className="text-[8px] text-gray-400 uppercase tracking-wider">Coach · Auditor · Developer</p>
-      </div>
-    </div>
-    
-    {/* Resto del menú (no cambia) */}
-    <div className="hidden md:flex gap-6 text-xs font-medium uppercase tracking-widest text-gray-400 items-center">
-      <a href="#about" onClick={(e) => handleNavClick(e, 'about')} className={`transition ${activeSection === 'about' ? 'text-red-500' : 'hover:text-red-500'}`}>Perfil</a>
-      <a href="#services" onClick={(e) => handleNavClick(e, 'services')} className={`transition ${activeSection === 'services' ? 'text-red-500' : 'hover:text-red-500'}`}>Servicios</a>
-      <a href="#procesos" onClick={(e) => handleNavClick(e, 'procesos')} className={`transition ${activeSection === 'procesos' ? 'text-red-500' : 'hover:text-red-500'}`}>Procesos</a>
-      <a href="#certifications" onClick={(e) => handleNavClick(e, 'certifications')} className={`transition ${activeSection === 'certifications' ? 'text-red-500' : 'hover:text-red-500'}`}>Certificaciones</a>
-      <Link to="/agendar" className="bg-white text-black px-4 py-1.5 rounded-full hover:bg-red-600 hover:text-white transition text-center">
-        Contacto
-      </Link>
-    </div>
-
-    <button className="md:hidden text-white p-2" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-      {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-    </button>
-  </div>
-  {/* Mobile menu... (se mantiene igual) */}
-</nav>
-  import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { ShieldCheck, Users, Globe, Linkedin, Mail, Award, Network, Workflow, FileCheck, Activity, CheckCircle2, Menu, X, Brain, BarChart3, ShieldAlert, LineChart, Rocket, ClipboardCheck, Briefcase, Map, Quote, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Link } from 'react-router-dom';
@@ -116,18 +84,23 @@ function App() {
         )}
       </AnimatePresence>
 
-      {/* NAV ULTRA-MINIMALISTA */}
+      {/* ========== HEADER CON LOGO CORPORATIVO ========== */}
       <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] md:w-[90%] max-w-4xl">
-        <div className="glass rounded-full px-4 md:px-6 py-3 flex justify-between items-center border border-white/10">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-red-600 rounded-lg flex items-center justify-center font-black text-white italic shrink-0">
-              {data.profile.initials}
+        <div className="glass rounded-full px-4 md:px-6 py-2 flex justify-between items-center border border-white/10">
+          {/* LOGO CORPORATIVO */}
+          <div className="flex items-center gap-3">
+            <img 
+              src="/images/logo-robert-teran.png" 
+              alt="Robert Teran" 
+              className="h-10 w-auto object-contain"
+            />
+            <div className="hidden sm:block">
+              <p className="text-xs font-bold text-white leading-tight">ROBERT TERAN</p>
+              <p className="text-[8px] text-gray-400 uppercase tracking-wider">Coach · Auditor · Developer</p>
             </div>
-            <span className="font-semibold tracking-tighter hidden sm:block uppercase">
-              {data.profile.name}
-            </span>
           </div>
           
+          {/* Menú Desktop */}
           <div className="hidden md:flex gap-6 text-xs font-medium uppercase tracking-widest text-gray-400 items-center">
             <a href="#about" onClick={(e) => handleNavClick(e, 'about')} className={`transition ${activeSection === 'about' ? 'text-red-500' : 'hover:text-red-500'}`}>Perfil</a>
             <a href="#services" onClick={(e) => handleNavClick(e, 'services')} className={`transition ${activeSection === 'services' ? 'text-red-500' : 'hover:text-red-500'}`}>Servicios</a>
@@ -138,11 +111,13 @@ function App() {
             </Link>
           </div>
 
+          {/* Botón Mobile */}
           <button className="md:hidden text-white p-2" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
+        {/* Menú Mobile */}
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div 
@@ -164,10 +139,29 @@ function App() {
         </AnimatePresence>
       </nav>
 
-      {/* HERO SECTION */}
+      {/* ========== HERO SECTION CON IMAGEN CORPORATIVA ========== */}
       <section id="inicio" className="relative min-h-screen flex items-center justify-center pt-32 pb-20 px-4 overflow-hidden">
-        <div className="absolute top-1/4 -left-20 w-96 h-96 bg-red-900/20 blur-[120px] rounded-full pointer-events-none"></div>
-        <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-blue-900/10 blur-[120px] rounded-full pointer-events-none"></div>
+        {/* Imagen de fondo corporativa */}
+        <div 
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: "url('https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed'
+          }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/70"></div>
+        </div>
+
+        {/* Logo flotante como marca de agua */}
+        <div className="absolute top-40 right-8 z-10 opacity-10 hidden lg:block">
+          <img 
+            src="/images/logo-robert-teran.png" 
+            alt="Logo" 
+            className="w-48 h-48 object-contain"
+          />
+        </div>
 
         <div className="container mx-auto max-w-6xl relative z-10">
           <motion.div 
@@ -189,11 +183,27 @@ function App() {
         </div>
       </section>
 
-      {/* PERFIL Y TRAYECTORIA */}
+      {/* ========== PERFIL Y TRAYECTORIA ========== */}
       <section id="about" className="py-24 relative z-10 bg-[#0a0a0a] border-t border-white/5">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <div>
+              {/* Foto de perfil corporativa */}
+              <div className="flex justify-center mb-8">
+                <div className="relative">
+                  <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-red-500/30 ring-2 ring-white/10 shadow-2xl">
+                    <img 
+                      src="https://randomuser.me/api/portraits/men/32.jpg" 
+                      alt="Robert Teran"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="absolute -bottom-2 -right-2 bg-red-600 rounded-full p-2 border-2 border-black shadow-lg">
+                    <Award className="w-4 h-4 text-white" />
+                  </div>
+                </div>
+              </div>
+
               <span className="inline-block px-4 py-1 rounded-full border border-red-500/30 bg-red-500/10 text-red-500 text-xs font-bold mb-6 tracking-[0.2em] uppercase">
                 Perfil Profesional
               </span>
@@ -245,7 +255,7 @@ function App() {
         </div>
       </section>
 
-      {/* SERVICES SECTION */}
+      {/* ========== SERVICES SECTION ========== */}
       <section id="services" className="py-24 relative z-10 bg-[#050505] border-t border-white/5">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="text-center mb-16">
@@ -264,7 +274,7 @@ function App() {
               onClick={() => setSelectedService(data.services[0])}
               className="md:col-span-2 md:row-span-2 glass rounded-3xl p-8 bento-card flex flex-col justify-end relative overflow-hidden group cursor-pointer"
             >
-              <ShieldCheck className="absolute top-8 right-8 w-16 h-16 text-red-600/20 group-hover:scale-110 group-hover:text-red-500/40 group-hover:drop-shadow-[0_0_15px_rgba(239,68,68,0.8)] transition-all duration-500" />
+              <ShieldCheck className="absolute top-8 right-8 w-16 h-16 text-red-600/20 group-hover:scale-110 group-hover:text-red-500/40 transition-all duration-500" />
               <h3 className="text-2xl font-bold mb-2 group-hover:text-red-400 transition-colors">{data.services[0].title}</h3>
               <p className="text-gray-400 text-sm max-w-md">{data.services[0].description}</p>
               <div className="mt-4 text-xs font-bold text-red-500 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
@@ -280,7 +290,7 @@ function App() {
               className="md:col-span-2 glass rounded-3xl p-8 bento-card flex items-center gap-6 group cursor-pointer"
             >
               <div className="w-16 h-16 bg-red-600/10 rounded-2xl flex items-center justify-center shrink-0 group-hover:bg-red-600/20 transition-colors">
-                <Users className="text-red-500 w-8 h-8 group-hover:scale-110 group-hover:drop-shadow-[0_0_10px_rgba(239,68,68,0.8)] transition-all duration-300" />
+                <Users className="text-red-500 w-8 h-8 group-hover:scale-110 transition-all duration-300" />
               </div>
               <div className="flex-1">
                 <h3 className="text-xl font-bold group-hover:text-red-400 transition-colors">{data.services[1].title}</h3>
@@ -298,7 +308,7 @@ function App() {
               className="md:col-span-1 glass rounded-3xl p-6 bento-card flex flex-col items-center justify-center text-center group"
             >
               <div className="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center mb-3 group-hover:bg-red-500/20 transition-colors">
-                <Award className="w-6 h-6 text-red-500 group-hover:scale-110 group-hover:drop-shadow-[0_0_10px_rgba(239,68,68,0.8)] transition-all duration-300" />
+                <Award className="w-6 h-6 text-red-500 group-hover:scale-110 transition-all duration-300" />
               </div>
               <p className="font-bold text-white">Estándar ISO</p>
               <p className="text-[10px] text-gray-400 mt-1 uppercase tracking-wider">Calidad Total</p>
@@ -330,13 +340,13 @@ function App() {
                   ))}
                 </div>
               </div>
-              <Globe className="text-gray-700 w-10 h-10 group-hover:scale-110 group-hover:text-red-500 group-hover:drop-shadow-[0_0_15px_rgba(239,68,68,0.5)] transition-all duration-500" />
+              <Globe className="text-gray-700 w-10 h-10 group-hover:scale-110 group-hover:text-red-500 transition-all duration-500" />
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* PROCESS MAPPING & STRUCTURING SECTION */}
+      {/* ========== PROCESS MAPPING & STRUCTURING SECTION ========== */}
       <section id="procesos" className="py-24 relative z-10 bg-[#050505] border-t border-white/5">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="text-center mb-16">
@@ -367,7 +377,7 @@ function App() {
                 >
                   <div className="flex items-center gap-4 mb-6">
                     <div className="w-12 h-12 rounded-xl bg-red-600/10 flex items-center justify-center shrink-0 group-hover:bg-red-600/20 transition-colors">
-                      <IconComponent className="text-red-500 w-6 h-6 group-hover:scale-110 group-hover:drop-shadow-[0_0_10px_rgba(239,68,68,0.8)] transition-all duration-300" />
+                      <IconComponent className="text-red-500 w-6 h-6 group-hover:scale-110 transition-all duration-300" />
                     </div>
                     <h3 className="text-2xl font-bold text-white">{area.title}</h3>
                   </div>
@@ -386,7 +396,7 @@ function App() {
         </div>
       </section>
 
-      {/* CERTIFICATIONS SECTION - VERSIÓN CORREGIDA */}
+      {/* ========== CERTIFICATIONS SECTION ========== */}
       <section id="certifications" className="py-24 relative z-10 bg-[#0a0a0a] border-t border-white/5">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="text-center mb-16">
@@ -432,7 +442,7 @@ function App() {
         </div>
       </section>
 
-      {/* TESTIMONIALS SECTION */}
+      {/* ========== TESTIMONIALS SECTION ========== */}
       <section id="testimonials" className="py-24 relative z-10 bg-[#050505] border-t border-white/5">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="text-center mb-16">
@@ -481,7 +491,7 @@ function App() {
         </div>
       </section>
 
-      {/* FOOTER / CONTACTO */}
+      {/* ========== FOOTER / CONTACTO ========== */}
       <footer id="contact" className="py-12 border-t border-white/5 mt-20">
         <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="text-left">
@@ -498,7 +508,7 @@ function App() {
         </div>
       </footer>
 
-      {/* MODALS */}
+      {/* ========== MODALS ========== */}
       <AnimatePresence>
         {selectedService && (
           <motion.div
@@ -606,10 +616,11 @@ function App() {
           </motion.div>
         )}
       </AnimatePresence>
+      
       <ChatWidget />
     </div>
   );
 }
 
-// ✅ EXPORTACIÓN DEFAULT (¡ESTA LÍNEA ES LA QUE FALTABA!)
+// ✅ EXPORTACIÓN DEFAULT (¡IMPORTANTE!)
 export default App;
