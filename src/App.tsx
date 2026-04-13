@@ -188,22 +188,21 @@ function App() {
         <div className="container mx-auto max-w-6xl px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <div>
-              {/* Foto de perfil corporativa */}
-              <div className="flex justify-center mb-8">
-                <div className="relative">
-                  <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-red-500/30 ring-2 ring-white/10 shadow-2xl">
-                    <img 
-                      src="https://randomuser.me/api/portraits/men/32.jpg" 
-                      alt="Robert Teran"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="absolute -bottom-2 -right-2 bg-red-600 rounded-full p-2 border-2 border-black shadow-lg">
-                    <Award className="w-4 h-4 text-white" />
-                  </div>
-                </div>
-              </div>
-
+             {/* Foto de perfil profesional - Coach de espaldas */}
+<div className="flex justify-center mb-8">
+  <div className="relative">
+    <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-red-500/30 ring-2 ring-white/10 shadow-2xl">
+      <img 
+        src="https://images.unsplash.com/photo-1556761175-4b46a572b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+        alt="Coach profesional dando entrenamiento"
+        className="w-full h-full object-cover object-center"
+      />
+    </div>
+    <div className="absolute -bottom-2 -right-2 bg-red-600 rounded-full p-2 border-2 border-black shadow-lg">
+      <Award className="w-4 h-4 text-white" />
+    </div>
+  </div>
+</div>
               <span className="inline-block px-4 py-1 rounded-full border border-red-500/30 bg-red-500/10 text-red-500 text-xs font-bold mb-6 tracking-[0.2em] uppercase">
                 Perfil Profesional
               </span>
