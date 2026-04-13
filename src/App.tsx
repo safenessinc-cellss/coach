@@ -1,4 +1,36 @@
-import { useState, useEffect } from 'react';
+<nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] md:w-[90%] max-w-4xl">
+  <div className="glass rounded-full px-4 md:px-6 py-3 flex justify-between items-center border border-white/10">
+    {/* LOGO CORPORATIVO */}
+    <div className="flex items-center gap-3">
+      <img 
+        src="/images/logo-robert-teran.png" 
+        alt="Robert Teran - Coach Empresarial" 
+        className="w-12 h-12 object-contain rounded-lg"
+      />
+      <div className="hidden sm:block">
+        <p className="text-xs font-bold text-white leading-tight">ROBERT TERAN</p>
+        <p className="text-[8px] text-gray-400 uppercase tracking-wider">Coach · Auditor · Developer</p>
+      </div>
+    </div>
+    
+    {/* Resto del menú (no cambia) */}
+    <div className="hidden md:flex gap-6 text-xs font-medium uppercase tracking-widest text-gray-400 items-center">
+      <a href="#about" onClick={(e) => handleNavClick(e, 'about')} className={`transition ${activeSection === 'about' ? 'text-red-500' : 'hover:text-red-500'}`}>Perfil</a>
+      <a href="#services" onClick={(e) => handleNavClick(e, 'services')} className={`transition ${activeSection === 'services' ? 'text-red-500' : 'hover:text-red-500'}`}>Servicios</a>
+      <a href="#procesos" onClick={(e) => handleNavClick(e, 'procesos')} className={`transition ${activeSection === 'procesos' ? 'text-red-500' : 'hover:text-red-500'}`}>Procesos</a>
+      <a href="#certifications" onClick={(e) => handleNavClick(e, 'certifications')} className={`transition ${activeSection === 'certifications' ? 'text-red-500' : 'hover:text-red-500'}`}>Certificaciones</a>
+      <Link to="/agendar" className="bg-white text-black px-4 py-1.5 rounded-full hover:bg-red-600 hover:text-white transition text-center">
+        Contacto
+      </Link>
+    </div>
+
+    <button className="md:hidden text-white p-2" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+      {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+    </button>
+  </div>
+  {/* Mobile menu... (se mantiene igual) */}
+</nav>
+  import { useState, useEffect } from 'react';
 import { ShieldCheck, Users, Globe, Linkedin, Mail, Award, Network, Workflow, FileCheck, Activity, CheckCircle2, Menu, X, Brain, BarChart3, ShieldAlert, LineChart, Rocket, ClipboardCheck, Briefcase, Map, Quote, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Link } from 'react-router-dom';
