@@ -1,6 +1,4 @@
-"global": {
-  "title": "Alcance Global"
-}{
+{
   "nav": {
     "perfil": "Perfil",
     "servicios": "Servicios",
@@ -17,20 +15,15 @@
   "about": {
     "badge": "Perfil Profesional",
     "title": "Más de 30 años de Excelencia",
-    "bio": "Profesional versátil certificado como IBM 2025 Coach con más de 30 años de experiencia en la industria. Sólida trayectoria en sistemas de gestión empresarial de calidad y medio ambiente...",
     "conference": "Conferencia Internacional - Gestión de Calidad"
   },
   "services": {
     "badge": "Mis Servicios",
     "title": "Ecosistema de Soluciones",
-    "auditor": {
-      "title": "Auditor Líder ISO",
-      "description": "Especialista en Sistemas de Gestión de Calidad (9001) y Ambiental (14001). Más de 30 años garantizando la excelencia operativa."
-    },
-    "coach": {
-      "title": "IBM 2025 Coach",
-      "description": "Liderazgo que inspira resultados."
-    },
+    "auditorTitle": "Auditor Líder ISO",
+    "auditorDesc": "Especialista en Sistemas de Gestión de Calidad (9001) y Ambiental (14001). Más de 30 años garantizando la excelencia operativa.",
+    "coachTitle": "IBM 2025 Coach",
+    "coachDesc": "Liderazgo que inspira resultados.",
     "details": "Ver detalles"
   },
   "certifications": {
@@ -46,7 +39,15 @@
   "footer": {
     "agendar": "Agendar Consulta"
   },
-  "modals": {
-    "schedule": "Agendar Consultoría"
+  "modal": {
+    "schedule": "Agendar Consultoría ISO",
+    "badgeISO": "Auditor Líder ISO",
+    "description1": "Como Auditor Líder ISO, mi enfoque va más allá del simple cumplimiento normativo. Implemento sistemas de gestión robustos que actúan como el motor de la mejora continua en su organización.",
+    "description2": "Mi metodología incluye un diagnóstico profundo (Gap Analysis), diseño de procesos a medida, formación de equipos internos y auditorías de pre-certificación.",
+    "success": "🏆 +50 certificaciones exitosas",
+    "successText": "He liderado con éxito procesos de certificación en industrias que van desde la manufactura hasta los servicios tecnológicos, asegurando no solo el certificado, sino una transformación real en la cultura de calidad de la empresa."
+  },
+  "global": {
+    "title": "Alcance Global"
   }
 }
