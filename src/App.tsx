@@ -1,7 +1,7 @@
 import { Analytics } from '@vercel/analytics/react';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ShieldCheck, Users, Globe, Linkedin, Mail, Award, Network, Workflow, FileCheck, Activity, CheckCircle2, Menu, X, Brain, BarChart3, ShieldAlert, LineChart, Rocket, ClipboardCheck, Briefcase, Map, Quote, ArrowRight, Download, ZoomIn, Image as ImageIcon, Eye } from 'lucide-react';
+import { ShieldCheck, Users, Globe, Linkedin, Mail, Award, Network, Workflow, FileCheck, Activity, CheckCircle2, Menu, X, Brain, BarChart3, ShieldAlert, LineChart, Rocket, ClipboardCheck, Briefcase, Map, Quote, ArrowRight, Image as ImageIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Link } from 'react-router-dom';
 import data from './data.json';
@@ -85,7 +85,7 @@ function App() {
     { code: "ISO 42001", name: "Inteligencia Artificial", description: "Sistemas de Gestión de IA" },
   ];
 
-  // Ilustraciones para Estructuración Organizacional
+  // Ilustraciones para Estructuración Organizacional con tus imágenes
   const illustrations = [
     {
       title: "Estructuración Organizacional",
@@ -109,7 +109,7 @@ function App() {
     },
     {
       title: "Estandarización (SGC)",
-      image: "/images/estandarizacion-sgc.jpg",
+      image: "/images/estandarizacion-sgc.jpg.png",
       description: "Desarrollo de procedimientos estandarizados para garantizar la calidad y consistencia operativa.",
       items: [
         "Desarrollo de Procedimientos Operativos Estándar (SOPs)",
@@ -119,7 +119,7 @@ function App() {
     },
     {
       title: "Gestión de Riesgos y Mejora",
-      image: "/images/gestion-riesgos.jpg.png",
+      image: "/images/gestion-riesgo.png",
       description: "Identificación y mitigación de riesgos para asegurar la mejora continua.",
       items: [
         "Elaboración de matrices de riesgos corporativos e impacto",
@@ -288,7 +288,7 @@ function App() {
         )}
       </AnimatePresence>
 
-      {/* ========== MODAL DE ILUSTRACIONES (Estructuración Organizacional) ========== */}
+      {/* ========== MODAL DE ILUSTRACIONES ========== */}
       <AnimatePresence>
         {selectedIllustration && (
           <motion.div
@@ -319,7 +319,7 @@ function App() {
                     alt={selectedIllustration.title}
                     className="w-full h-auto object-cover"
                     onError={(e) => {
-                      (e.target as HTMLImageElement).src = 'https://placehold.co/600x400/1a1a1a/red?text=Ilustración+profesional';
+                      (e.target as HTMLImageElement).src = '/images/conferencia2.jpg';
                     }}
                   />
                 </div>
@@ -378,19 +378,16 @@ function App() {
                 <div className="space-y-4">
                   <div className="relative rounded-2xl overflow-hidden border-2 border-red-500/30 shadow-2xl">
                     <img 
-                      src="/images/ibm-coach.jpg" 
-                      alt="Robert Terán - IBM Coach"
+                      src="/images/conferencia2.jpg" 
+                      alt="Robert Terán - Perfil Profesional"
                       className="w-full h-auto object-cover"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = '/images/conferencia2.jpg';
-                      }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                     <div className="absolute bottom-4 left-4 right-4">
                       <div className="bg-black/70 backdrop-blur-md rounded-xl p-3 border border-red-500/30">
                         <div className="flex items-center gap-2 mb-1">
                           <Award className="w-4 h-4 text-red-500" />
-                          <span className="text-white text-xs font-bold uppercase tracking-wider">IBM 2025 Coach · Auditor · Developer</span>
+                          <span className="text-white text-xs font-bold uppercase tracking-wider">Coach · Auditor · Developer</span>
                         </div>
                         <p className="text-gray-300 text-xs">+30 años de experiencia</p>
                       </div>
@@ -410,7 +407,7 @@ function App() {
                 <div className="space-y-5">
                   <div className="border-b border-white/10 pb-4">
                     <h2 className="text-3xl md:text-4xl font-bold text-white">{data.profile.name}</h2>
-                    <p className="text-red-400 font-medium mt-1">IBM 2025 Coach | Auditor Líder ISO</p>
+                    <p className="text-red-400 font-medium mt-1">Auditor Líder ISO | Coach Ejecutivo</p>
                     <p className="text-gray-400 text-sm mt-2">La Calidad es Innegociable</p>
                   </div>
                   
@@ -419,7 +416,7 @@ function App() {
                       <Briefcase className="w-4 h-4 text-red-500" />
                       Perfil Profesional
                     </h3>
-                    <p className="text-gray-300 text-sm leading-relaxed">{data.about.bio}</p>
+                    <p className="text-gray-300 text-sm leading-relaxed">{data.about.bio.substring(0, 500)}...</p>
                   </div>
                   
                   <div>
@@ -567,12 +564,9 @@ function App() {
                 <div className="relative group">
                   <div className="w-full max-w-md rounded-2xl overflow-hidden border-2 border-red-500/30 ring-2 ring-white/10 shadow-2xl transition-transform group-hover:scale-105 duration-300">
                     <img 
-                      src="/images/ibm-coach.jpg" 
-                      alt="Robert Terán - IBM 2025 Coach"
+                      src="/images/conferencia2.jpg" 
+                      alt="Robert Terán - Perfil Profesional"
                       className="w-full h-auto object-cover"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = '/images/conferencia2.jpg';
-                      }}
                     />
                   </div>
                   <div className="absolute -bottom-4 -right-4 bg-red-600 rounded-full p-3 border-2 border-black shadow-lg">
@@ -582,7 +576,7 @@ function App() {
                     <div className="bg-black/70 backdrop-blur-sm rounded-lg p-2 text-center">
                       <p className="text-white text-xs font-semibold flex items-center justify-center gap-2">
                         <Users className="w-3 h-3 text-red-400" />
-                        IBM 2025 Coach - Conferencia Internacional
+                        Conferencia Internacional - Gestión de Calidad
                       </p>
                     </div>
                   </div>
@@ -627,7 +621,7 @@ function App() {
                 className="cursor-pointer glass p-8 rounded-3xl border border-white/5 hover:border-red-500/30 transition-colors hover:bg-red-500/5"
               >
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-red-600/10 flex items-center justify-center shrink-0 group-hover:bg-red-600/20 transition-colors">
+                  <div className="w-12 h-12 rounded-xl bg-red-600/10 flex items-center justify-center shrink-0">
                     <ShieldCheck className="text-red-500 w-6 h-6" />
                   </div>
                   <div>
@@ -756,7 +750,7 @@ function App() {
         </div>
       </section>
 
-      {/* ========== PROCESS MAPPING & STRUCTURING SECTION (CON IMÁGENES CLICKEABLES) ========== */}
+      {/* ========== PROCESS MAPPING & STRUCTURING SECTION ========== */}
       <section id="procesos" className="py-24 relative z-10 bg-[#050505] border-t border-white/5">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="text-center mb-16">
@@ -776,7 +770,6 @@ function App() {
                 area.icon === 'Workflow' ? Workflow :
                 area.icon === 'FileCheck' ? FileCheck : Activity;
               
-              // Encontrar ilustración correspondiente
               const illustration = illustrations.find(ill => ill.title === area.title);
 
               return (
@@ -972,12 +965,9 @@ function App() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="relative rounded-2xl overflow-hidden min-h-[300px]">
                   <img 
-                    src={selectedService.id === 'iso' ? '/images/ibm-coach.jpg' : '/images/conferencia1.jpg'} 
+                    src="/images/conferencia2.jpg" 
                     alt={selectedService.title}
                     className="w-full h-full object-cover rounded-2xl"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = '/images/conferencia1.jpg';
-                    }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                   
@@ -1008,17 +998,7 @@ function App() {
                   
                   <div className="space-y-4">
                     <p className="text-gray-300 leading-relaxed">
-                      {selectedService.id === 'iso' ? 
-                        "Como Auditor Líder ISO, mi enfoque va más allá del simple cumplimiento normativo. Implemento sistemas de gestión robustos que actúan como el motor de la mejora continua en su organización." :
-                        "Como IBM 2025 Coach certificado, desarrollo programas personalizados de liderazgo ejecutivo para potenciar el talento humano y alcanzar resultados extraordinarios."
-                      }
-                    </p>
-                    
-                    <p className="text-gray-300 leading-relaxed">
-                      {selectedService.id === 'iso' ?
-                        "Mi metodología incluye un diagnóstico profundo (Gap Analysis), diseño de procesos a medida, formación de equipos internos y auditorías de pre-certificación." :
-                        "Mi enfoque combina herramientas de coaching de vanguardia con estrategias probadas de desarrollo organizacional."
-                      }
+                      {selectedService.detailedDescription}
                     </p>
                     
                     <div className="bg-red-600/10 border border-red-500/20 rounded-xl p-4">
