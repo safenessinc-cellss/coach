@@ -88,7 +88,6 @@ function App() {
       {/* ========== HEADER CON LOGO CORPORATIVO ========== */}
       <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] md:w-[90%] max-w-4xl">
         <div className="glass rounded-full px-4 md:px-6 py-2 flex justify-between items-center border border-white/10">
-          {/* LOGO CORPORATIVO */}
           <div className="flex items-center gap-3">
             <img 
               src="/images/logo-robert-teran.png" 
@@ -101,7 +100,6 @@ function App() {
             </div>
           </div>
           
-          {/* Menú Desktop */}
           <div className="hidden md:flex gap-6 text-xs font-medium uppercase tracking-widest text-gray-400 items-center">
             <a href="#about" onClick={(e) => handleNavClick(e, 'about')} className={`transition ${activeSection === 'about' ? 'text-red-500' : 'hover:text-red-500'}`}>Perfil</a>
             <a href="#services" onClick={(e) => handleNavClick(e, 'services')} className={`transition ${activeSection === 'services' ? 'text-red-500' : 'hover:text-red-500'}`}>Servicios</a>
@@ -112,13 +110,11 @@ function App() {
             </Link>
           </div>
 
-          {/* Botón Mobile */}
           <button className="md:hidden text-white p-2" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
-        {/* Menú Mobile */}
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div 
@@ -142,7 +138,6 @@ function App() {
 
       {/* ========== HERO SECTION CON IMAGEN DE CONFERENCIA 1 ========== */}
       <section id="inicio" className="relative min-h-screen flex items-center justify-center pt-32 pb-20 px-4 overflow-hidden">
-        {/* IMAGEN 1: Robert Terán dando conferencia (fondo del Hero) */}
         <div 
           className="absolute inset-0 z-0"
           style={{
@@ -155,7 +150,6 @@ function App() {
           <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/70 to-black/80"></div>
         </div>
 
-        {/* Logo flotante como marca de agua */}
         <div className="absolute top-40 right-8 z-10 opacity-10 hidden lg:block">
           <img 
             src="/images/logo-robert-teran.png" 
@@ -188,11 +182,9 @@ function App() {
       <section id="about" className="py-24 relative z-10 bg-[#0a0a0a] border-t border-white/5">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-            {/* Columna izquierda - IMAGEN 2: Robert Terán dando conferencia */}
             <div>
               <div className="flex justify-center mb-8">
                 <div className="relative">
-                  {/* Imagen de conferencia 2 - Estilo profesional */}
                   <div className="w-full max-w-md rounded-2xl overflow-hidden border-2 border-red-500/30 ring-2 ring-white/10 shadow-2xl">
                     <img 
                       src="/images/conferencia2.jpg" 
@@ -200,11 +192,9 @@ function App() {
                       className="w-full h-auto object-cover hover:scale-105 transition-transform duration-700"
                     />
                   </div>
-                  {/* Badge flotante */}
                   <div className="absolute -bottom-4 -right-4 bg-red-600 rounded-full p-3 border-2 border-black shadow-lg">
                     <Award className="w-5 h-5 text-white" />
                   </div>
-                  {/* Overlay con texto informativo */}
                   <div className="absolute bottom-4 left-4 right-4">
                     <div className="bg-black/70 backdrop-blur-sm rounded-lg p-2 text-center">
                       <p className="text-white text-xs font-semibold flex items-center justify-center gap-2">
@@ -237,7 +227,6 @@ function App() {
               </div>
             </div>
 
-            {/* Columna derecha - Trayectoria profesional */}
             <div className="space-y-6">
               {data.about.career.map((block, idx) => (
                 <motion.div 
@@ -536,38 +525,88 @@ function App() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-[#0a0a0a] border border-white/10 rounded-3xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto relative"
+              className="bg-[#0a0a0a] border border-white/10 rounded-3xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto relative"
             >
               <button 
                 onClick={() => setSelectedService(null)}
-                className="absolute top-6 right-6 text-gray-400 hover:text-white transition-colors"
+                className="absolute top-6 right-6 text-gray-400 hover:text-white transition-colors z-10"
               >
                 <X className="w-6 h-6" />
               </button>
               
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 bg-red-600/10 rounded-2xl flex items-center justify-center shrink-0">
-                  {selectedService.id === 'iso' ? <ShieldCheck className="text-red-500 w-8 h-8" /> : <Users className="text-red-500 w-8 h-8" />}
+              {/* MODAL CON IMAGEN DE CONFERENCIA 2 */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* LADO IZQUIERDO - IMAGEN */}
+                <div className="relative rounded-2xl overflow-hidden min-h-[300px]">
+                  <img 
+                    src="/images/conferencia2.jpg" 
+                    alt="Robert Terán - Auditor Líder ISO en conferencia internacional"
+                    className="w-full h-full object-cover rounded-2xl"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                  
+                  {/* Badge flotante */}
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <div className="bg-black/70 backdrop-blur-md rounded-xl p-3 border border-red-500/30">
+                      <div className="flex items-center gap-2 mb-1">
+                        <ShieldCheck className="w-4 h-4 text-red-500" />
+                        <span className="text-white text-xs font-bold uppercase tracking-wider">Auditor Líder ISO</span>
+                      </div>
+                      <p className="text-gray-300 text-xs">9001 · 14001 · 45001</p>
+                    </div>
+                  </div>
                 </div>
+
+                {/* LADO DERECHO - CONTENIDO */}
                 <div>
-                  <h3 className="text-3xl font-bold text-white">{selectedService.title}</h3>
-                  <p className="text-red-400 font-medium mt-1">{selectedService.description}</p>
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-14 h-14 bg-red-600/10 rounded-2xl flex items-center justify-center shrink-0">
+                      {selectedService.id === 'iso' ? 
+                        <ShieldCheck className="text-red-500 w-7 h-7" /> : 
+                        <Users className="text-red-500 w-7 h-7" />
+                      }
+                    </div>
+                    <div>
+                      <h3 className="text-2xl md:text-3xl font-bold text-white">{selectedService.title}</h3>
+                      <p className="text-red-400 text-sm font-medium mt-1">{selectedService.description}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <p className="text-gray-300 leading-relaxed">
+                      Como <span className="text-red-400 font-semibold">Auditor Líder ISO</span>, mi enfoque va más allá del simple cumplimiento normativo. Implemento sistemas de gestión robustos que actúan como el motor de la mejora continua en su organización.
+                    </p>
+                    
+                    <p className="text-gray-300 leading-relaxed">
+                      Mi metodología incluye un diagnóstico profundo (Gap Analysis), diseño de procesos a medida, formación de equipos internos y auditorías de pre-certificación.
+                    </p>
+                    
+                    <div className="bg-red-600/10 border border-red-500/20 rounded-xl p-4">
+                      <p className="text-gray-200 text-sm leading-relaxed">
+                        <span className="text-red-400 font-bold">🏆 +50 certificaciones exitosas</span><br />
+                        He liderado con éxito procesos de certificación en industrias que van desde la manufactura hasta los servicios tecnológicos, asegurando no solo el certificado, sino una transformación real en la cultura de calidad de la empresa.
+                      </p>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2 pt-4">
+                      <span className="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-gray-400">ISO 9001:2015</span>
+                      <span className="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-gray-400">ISO 14001:2015</span>
+                      <span className="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-gray-400">ISO 45001:2018</span>
+                      <span className="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-gray-400">Lean Manufacturing</span>
+                      <span className="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-gray-400">Six Sigma</span>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-8 flex justify-end">
+                    <Link 
+                      to="/agendar" 
+                      className="bg-red-600 text-white px-6 py-3 rounded-full font-bold hover:bg-red-700 transition flex items-center gap-2"
+                    >
+                      Agendar Consultoría ISO
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
+                  </div>
                 </div>
-              </div>
-              
-              <div className="prose prose-invert max-w-none">
-                <p className="text-gray-300 leading-relaxed text-lg">
-                  {selectedService.detailedDescription}
-                </p>
-              </div>
-              
-              <div className="mt-10 flex justify-end">
-                <Link 
-                  to="/agendar" 
-                  className="bg-red-600 text-white px-8 py-3 rounded-full font-bold hover:bg-red-700 transition"
-                >
-                  Agendar Consulta
-                </Link>
               </div>
             </motion.div>
           </motion.div>
@@ -635,5 +674,4 @@ function App() {
   );
 }
 
-// ✅ EXPORTACIÓN DEFAULT
 export default App;
