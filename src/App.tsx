@@ -972,11 +972,11 @@ function App() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="relative rounded-2xl overflow-hidden min-h-[300px]">
                   <img 
-                    src={selectedService.id === 'iso' ? '/images/ibm-coach.jpg' : '/images/conferencia2.jpg'} 
+                    src={selectedService.id === 'iso' ? '/images/ibm-coach.jpg' : '/images/conferencia1.jpg'} 
                     alt={selectedService.title}
                     className="w-full h-full object-cover rounded-2xl"
                     onError={(e) => {
-                      (e.target as HTMLImageElement).src = '/images/conferencia2.jpg';
+                      (e.target as HTMLImageElement).src = '/images/conferencia1.jpg';
                     }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
