@@ -1,0 +1,50 @@
+{
+  "nav": {
+    "perfil": "Profile",
+    "servicios": "Services",
+    "procesos": "Processes",
+    "certificaciones": "Certifications",
+    "contacto": "Contact"
+  },
+  "hero": {
+    "badge": "Engineering & Leadership Solutions",
+    "title": "Quality is",
+    "titleHighlight": "Non-negotiable.",
+    "description": "I merge technical engineering precision with human talent development to create exponential companies."
+  },
+  "about": {
+    "badge": "Professional Profile",
+    "title": "Over 30 Years of Excellence",
+    "bio": "Versatile professional certified as IBM 2025 Coach with over 30 years of industry experience. Solid track record in quality and environmental management systems...",
+    "conference": "International Conference - Quality Management"
+  },
+  "services": {
+    "badge": "My Services",
+    "title": "Solution Ecosystem",
+    "auditor": {
+      "title": "Lead ISO Auditor",
+      "description": "Specialist in Quality (9001) and Environmental (14001) Management Systems. Over 30 years ensuring operational excellence."
+    },
+    "coach": {
+      "title": "IBM 2025 Coach",
+      "description": "Leadership that inspires results."
+    },
+    "details": "View details"
+  },
+  "certifications": {
+    "badge": "The Gold Standard",
+    "title": "Excellence Standards",
+    "description": "ISO certifications are the gold standard for lead auditors."
+  },
+  "testimonials": {
+    "badge": "Success Stories",
+    "title": "What our clients say",
+    "viewCase": "View case"
+  },
+  "footer": {
+    "agendar": "Schedule Consultation"
+  },
+  "modals": {
+    "schedule": "Schedule ISO Consulting"
+  }
+}
