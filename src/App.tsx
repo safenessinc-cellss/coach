@@ -1,7 +1,7 @@
 import { Analytics } from '@vercel/analytics/react';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ShieldCheck, Users, Globe, Linkedin, Mail, Award, Network, Workflow, FileCheck, Activity, CheckCircle2, Menu, X, Brain, BarChart3, ShieldAlert, LineChart, Rocket, ClipboardCheck, Briefcase, Map, Quote, ArrowRight, Download, ExternalLink, Calendar, MapPin } from 'lucide-react';
+import { ShieldCheck, Users, Globe, Linkedin, Mail, Award, Network, Workflow, FileCheck, Activity, CheckCircle2, Menu, X, Brain, BarChart3, ShieldAlert, LineChart, Rocket, ClipboardCheck, Briefcase, Map, Quote, ArrowRight, Download, ZoomIn, Image as ImageIcon, Eye } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Link } from 'react-router-dom';
 import data from './data.json';
@@ -19,6 +19,9 @@ function App() {
   const [selectedService, setSelectedService] = useState<any>(null);
   const [selectedTestimonial, setSelectedTestimonial] = useState<any>(null);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  const [isBioModalOpen, setIsBioModalOpen] = useState(false);
+  const [isCertificationsModalOpen, setIsCertificationsModalOpen] = useState(false);
+  const [selectedIllustration, setSelectedIllustration] = useState<{ title: string; image: string; description: string; items: string[] } | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -60,6 +63,72 @@ function App() {
     i18n.changeLanguage(lng);
   };
 
+  // Todas las certificaciones ISO existentes
+  const allCertifications = [
+    { code: "ISO 9001:2015", name: "Gestión de Calidad", description: "Sistemas de Gestión de Calidad - Requisitos" },
+    { code: "ISO 14001:2015", name: "Gestión Ambiental", description: "Sistemas de Gestión Ambiental - Requisitos" },
+    { code: "ISO 45001:2018", name: "Seguridad y Salud en el Trabajo", description: "Sistemas de Gestión de SST" },
+    { code: "ISO 27001:2022", name: "Seguridad de la Información", description: "Sistemas de Gestión de Seguridad de la Información" },
+    { code: "ISO 22000", name: "Seguridad Alimentaria", description: "Sistemas de Gestión de Inocuidad de los Alimentos" },
+    { code: "ISO 50001:2018", name: "Gestión de la Energía", description: "Sistemas de Gestión de la Energía" },
+    { code: "ISO 31000:2018", name: "Gestión de Riesgos", description: "Directrices para la Gestión de Riesgos" },
+    { code: "ISO 26000", name: "Responsabilidad Social", description: "Guía de Responsabilidad Social" },
+    { code: "ISO 37001", name: "Anti-Soborno", description: "Sistemas de Gestión Anti-Soborno" },
+    { code: "ISO 22301", name: "Continuidad del Negocio", description: "Sistemas de Gestión de Continuidad del Negocio" },
+    { code: "ISO 20000-1", name: "Gestión de Servicios TI", description: "Gestión de Servicios de Tecnología de la Información" },
+    { code: "ISO 13485", name: "Dispositivos Médicos", description: "Sistemas de Gestión de Calidad para Dispositivos Médicos" },
+    { code: "IATF 16949", name: "Automotriz", description: "Sistemas de Gestión de Calidad para la Industria Automotriz" },
+    { code: "ISO 17025", name: "Laboratorios", description: "Requisitos para Laboratorios de Ensayo y Calibración" },
+    { code: "ISO 21001", name: "Educación", description: "Sistemas de Gestión para Organizaciones Educativas" },
+    { code: "ISO 28000", name: "Cadena de Suministro", description: "Sistemas de Gestión de Seguridad de la Cadena de Suministro" },
+    { code: "ISO 37000", name: "Gobierno Corporativo", description: "Guía de Buen Gobierno" },
+    { code: "ISO 42001", name: "Inteligencia Artificial", description: "Sistemas de Gestión de IA" },
+  ];
+
+  // Ilustraciones para Estructuración Organizacional
+  const illustrations = [
+    {
+      title: "Estructuración Organizacional",
+      image: "/images/estructura-organigrama.jpg",
+      description: "Diseño de organigramas y estructuras ágiles para optimizar la jerarquía y comunicación empresarial.",
+      items: [
+        "Diseño de organigramas y estructuras ágiles",
+        "Definición de roles, perfiles de puesto y responsabilidades",
+        "Alineación de objetivos estratégicos (OKRs y KPIs)"
+      ]
+    },
+    {
+      title: "Mapeo y Optimización",
+      image: "/images/mapeo-procesos.jpg",
+      description: "Diagramación avanzada bajo estándares BPMN para identificar y eliminar cuellos de botella.",
+      items: [
+        "Levantamiento de procesos actuales (As-Is) y futuros (To-Be)",
+        "Diagramación avanzada bajo estándares internacionales (BPMN)",
+        "Identificación y eliminación de cuellos de botella (Metodología Lean)"
+      ]
+    },
+    {
+      title: "Estandarización (SGC)",
+      image: "/images/estandarizacion-sgc.jpg",
+      description: "Desarrollo de procedimientos estandarizados para garantizar la calidad y consistencia operativa.",
+      items: [
+        "Desarrollo de Procedimientos Operativos Estándar (SOPs)",
+        "Creación de manuales de calidad y políticas corporativas",
+        "Diseño de cuadros de mando integrales (Dashboards)"
+      ]
+    },
+    {
+      title: "Gestión de Riesgos y Mejora",
+      image: "/images/gestion-riesgos.jpg",
+      description: "Identificación y mitigación de riesgos para asegurar la mejora continua.",
+      items: [
+        "Elaboración de matrices de riesgos corporativos e impacto",
+        "Implementación del Ciclo PDCA (Plan-Do-Check-Act)",
+        "Auditorías internas preventivas y planes de acción correctiva"
+      ]
+    }
+  ];
+
   return (
     <div className="min-h-screen selection:bg-red-500/30 font-sans">
       {/* SKELETON LOADER OVERLAY */}
@@ -92,7 +161,196 @@ function App() {
         )}
       </AnimatePresence>
 
-      {/* ========== MODAL DE PERFIL / BIOGRAFÍA ========== */}
+      {/* ========== MODAL DE CERTIFICACIONES ISO ========== */}
+      <AnimatePresence>
+        {isCertificationsModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[300] bg-black/95 backdrop-blur-md flex items-center justify-center p-4"
+            onClick={() => setIsCertificationsModalOpen(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-[#0a0a0a] border border-white/10 rounded-3xl p-6 md:p-8 max-w-5xl w-full max-h-[90vh] overflow-y-auto relative"
+            >
+              <button 
+                onClick={() => setIsCertificationsModalOpen(false)}
+                className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors z-10 bg-black/50 rounded-full p-2"
+              >
+                <X className="w-6 h-6" />
+              </button>
+              
+              <div className="text-center mb-8">
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">Certificaciones ISO</h2>
+                <p className="text-gray-400">Todas las certificaciones disponibles para auditoría y consultoría</p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {allCertifications.map((cert, idx) => (
+                  <div key={idx} className="bg-white/5 border border-white/10 rounded-xl p-4 hover:border-red-500/30 transition-colors">
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-red-600/20 flex items-center justify-center shrink-0">
+                        <ShieldCheck className="w-5 h-5 text-red-500" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-white">{cert.code}</h3>
+                        <p className="text-red-400 text-xs">{cert.name}</p>
+                        <p className="text-gray-400 text-xs mt-1">{cert.description}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="mt-6 text-center text-gray-500 text-xs">
+                Total: {allCertifications.length} certificaciones disponibles
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ========== MODAL DE BIOGRAFÍA (+30 Años) ========== */}
+      <AnimatePresence>
+        {isBioModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[300] bg-black/95 backdrop-blur-md flex items-center justify-center p-4"
+            onClick={() => setIsBioModalOpen(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-[#0a0a0a] border border-white/10 rounded-3xl p-6 md:p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto relative"
+            >
+              <button 
+                onClick={() => setIsBioModalOpen(false)}
+                className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors z-10 bg-black/50 rounded-full p-2"
+              >
+                <X className="w-6 h-6" />
+              </button>
+              
+              <div className="flex items-center gap-4 mb-6 border-b border-white/10 pb-4">
+                <div className="w-16 h-16 rounded-full bg-red-600/20 flex items-center justify-center">
+                  <Award className="w-8 h-8 text-red-500" />
+                </div>
+                <div>
+                  <h2 className="text-2xl md:text-3xl font-bold text-white">Trayectoria Profesional</h2>
+                  <p className="text-red-400">Más de 30 años de experiencia</p>
+                </div>
+              </div>
+              
+              <div className="space-y-6">
+                <p className="text-gray-300 leading-relaxed">{data.about.bio}</p>
+                
+                <div className="bg-white/5 rounded-xl p-4">
+                  <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                    <Briefcase className="w-5 h-5 text-red-500" />
+                    Hitos profesionales
+                  </h3>
+                  <ul className="space-y-2">
+                    <li className="flex items-start gap-2 text-gray-400 text-sm">
+                      <CheckCircle2 className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+                      <span>+50 certificaciones ISO exitosas lideradas</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-gray-400 text-sm">
+                      <CheckCircle2 className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+                      <span>Más de 500 empresas asesoradas en 15 países</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-gray-400 text-sm">
+                      <CheckCircle2 className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+                      <span>Certificado IBM 2025 Coach - Liderazgo ejecutivo</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-gray-400 text-sm">
+                      <CheckCircle2 className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+                      <span>Lean Manufacturing y Six Sigma Green Belt</span>
+                    </li>
+                  </ul>
+                </div>
+                
+                <div className="bg-red-600/10 border border-red-500/20 rounded-xl p-4">
+                  <h3 className="text-md font-bold text-white mb-2">🏆 Filosofía profesional</h3>
+                  <p className="text-gray-300 text-sm italic">"La calidad no es un acto, es un hábito. La excelencia no es una excepción, es una cultura."</p>
+                  <p className="text-red-400 text-xs mt-2">— Robert Terán</p>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ========== MODAL DE ILUSTRACIONES (Estructuración Organizacional) ========== */}
+      <AnimatePresence>
+        {selectedIllustration && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[300] bg-black/95 backdrop-blur-md flex items-center justify-center p-4"
+            onClick={() => setSelectedIllustration(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-[#0a0a0a] border border-white/10 rounded-3xl p-6 md:p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto relative"
+            >
+              <button 
+                onClick={() => setSelectedIllustration(null)}
+                className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors z-10 bg-black/50 rounded-full p-2"
+              >
+                <X className="w-6 h-6" />
+              </button>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="rounded-2xl overflow-hidden bg-white/5 flex items-center justify-center min-h-[250px]">
+                  <img 
+                    src={selectedIllustration.image} 
+                    alt={selectedIllustration.title}
+                    className="w-full h-auto object-cover"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'https://placehold.co/600x400/1a1a1a/red?text=Ilustración+profesional';
+                    }}
+                  />
+                </div>
+                <div>
+                  <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">{selectedIllustration.title}</h2>
+                  <p className="text-gray-300 leading-relaxed mb-6">{selectedIllustration.description}</p>
+                  
+                  <h3 className="text-lg font-semibold text-white flex items-center gap-2 mb-3">
+                    <ClipboardCheck className="w-5 h-5 text-red-500" />
+                    Elementos clave:
+                  </h3>
+                  <ul className="space-y-2">
+                    {selectedIllustration.items.map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-gray-400 text-sm">
+                        <CheckCircle2 className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  
+                  <div className="mt-6 pt-4 border-t border-white/10">
+                    <p className="text-gray-500 text-xs">Ilustración técnica - Metodología profesional</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ========== MODAL DE PERFIL PROFESIONAL ========== */}
       <AnimatePresence>
         {isProfileModalOpen && (
           <motion.div
@@ -117,20 +375,22 @@ function App() {
               </button>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* LADO IZQUIERDO - IMAGEN Y DATOS BÁSICOS */}
                 <div className="space-y-4">
                   <div className="relative rounded-2xl overflow-hidden border-2 border-red-500/30 shadow-2xl">
                     <img 
-                      src="/images/conferencia2.jpg" 
-                      alt="Robert Terán - Perfil Profesional"
+                      src="/images/ibm-coach.jpg" 
+                      alt="Robert Terán - IBM Coach"
                       className="w-full h-auto object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = '/images/conferencia2.jpg';
+                      }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                     <div className="absolute bottom-4 left-4 right-4">
                       <div className="bg-black/70 backdrop-blur-md rounded-xl p-3 border border-red-500/30">
                         <div className="flex items-center gap-2 mb-1">
                           <Award className="w-4 h-4 text-red-500" />
-                          <span className="text-white text-xs font-bold uppercase tracking-wider">Coach · Auditor · Developer</span>
+                          <span className="text-white text-xs font-bold uppercase tracking-wider">IBM 2025 Coach · Auditor · Developer</span>
                         </div>
                         <p className="text-gray-300 text-xs">+30 años de experiencia</p>
                       </div>
@@ -144,18 +404,14 @@ function App() {
                     <a href={`mailto:${data.profile.email}`} className="bg-red-600/20 hover:bg-red-600 transition-colors p-3 rounded-full">
                       <Mail className="w-5 h-5 text-red-400" />
                     </a>
-                    <button className="bg-green-600/20 hover:bg-green-600 transition-colors p-3 rounded-full">
-                      <Download className="w-5 h-5 text-green-400" />
-                    </button>
                   </div>
                 </div>
 
-                {/* LADO DERECHO - BIOGRAFÍA COMPLETA */}
                 <div className="space-y-5">
                   <div className="border-b border-white/10 pb-4">
                     <h2 className="text-3xl md:text-4xl font-bold text-white">{data.profile.name}</h2>
-                    <p className="text-red-400 font-medium mt-1">{data.profile.title}</p>
-                    <p className="text-gray-400 text-sm mt-2">{data.profile.subtitle}</p>
+                    <p className="text-red-400 font-medium mt-1">IBM 2025 Coach | Auditor Líder ISO</p>
+                    <p className="text-gray-400 text-sm mt-2">La Calidad es Innegociable</p>
                   </div>
                   
                   <div>
@@ -169,10 +425,10 @@ function App() {
                   <div>
                     <h3 className="text-lg font-semibold text-white flex items-center gap-2 mb-3">
                       <Award className="w-4 h-4 text-red-500" />
-                      Certificaciones y Especialidades
+                      Certificaciones
                     </h3>
                     <div className="flex flex-wrap gap-2">
-                      {data.about.badges.map((badge, idx) => {
+                      {data.about.badges.slice(0, 10).map((badge, idx) => {
                         const Icon = iconMap[badge.icon] || CheckCircle2;
                         return (
                           <div key={idx} className="flex items-center gap-1 bg-white/5 border border-white/10 rounded-full px-3 py-1.5">
@@ -184,34 +440,8 @@ function App() {
                     </div>
                   </div>
                   
-                  <div>
-                    <h3 className="text-lg font-semibold text-white flex items-center gap-2 mb-3">
-                      <Activity className="w-4 h-4 text-red-500" />
-                      Trayectoria Profesional
-                    </h3>
-                    <div className="space-y-3 max-h-[220px] overflow-y-auto pr-2 custom-scrollbar">
-                      {data.about.career.map((block, idx) => (
-                        <div key={idx} className="bg-white/5 rounded-xl p-3 border border-white/10">
-                          <h4 className="text-sm font-bold text-white">{block.area}</h4>
-                          <p className="text-gray-400 text-xs mt-1 leading-relaxed">{block.description}</p>
-                          <div className="flex flex-wrap gap-1 mt-2">
-                            {block.roles.map((role, i) => (
-                              <span key={i} className="text-[10px] text-red-400 bg-red-400/10 px-2 py-0.5 rounded">
-                                {role}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div className="pt-3 flex justify-end gap-3">
-                    <Link 
-                      to="/agendar" 
-                      onClick={() => setIsProfileModalOpen(false)}
-                      className="bg-red-600 text-white px-5 py-2 rounded-full font-bold hover:bg-red-700 transition flex items-center gap-2 text-sm"
-                    >
+                  <div className="pt-3 flex justify-end">
+                    <Link to="/agendar" onClick={() => setIsProfileModalOpen(false)} className="bg-red-600 text-white px-5 py-2 rounded-full font-bold hover:bg-red-700 transition flex items-center gap-2 text-sm">
                       Agendar Consultoría
                       <ArrowRight className="w-4 h-4" />
                     </Link>
@@ -223,10 +453,9 @@ function App() {
         )}
       </AnimatePresence>
 
-      {/* ========== HEADER CON LOGO Y SELECTOR DE IDIOMA ========== */}
+      {/* ========== HEADER ========== */}
       <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] md:w-[90%] max-w-5xl">
         <div className="glass rounded-full px-4 md:px-6 py-2 flex justify-between items-center border border-white/10">
-          {/* LOGO - Click para abrir perfil */}
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => setIsProfileModalOpen(true)}>
             <img 
               src="/images/logo-robert-teran.png" 
@@ -239,7 +468,6 @@ function App() {
             </div>
           </div>
           
-          {/* MENÚ DE NAVEGACIÓN + SELECTOR DE IDIOMA */}
           <div className="hidden md:flex items-center gap-6">
             <div className="flex gap-6 text-xs font-medium uppercase tracking-widest text-gray-400 items-center">
               <button onClick={() => setIsProfileModalOpen(true)} className={`transition ${activeSection === 'about' ? 'text-red-500' : 'hover:text-red-500'}`}>{t('nav.perfil')}</button>
@@ -267,7 +495,6 @@ function App() {
           </button>
         </div>
 
-        {/* Menú Mobile */}
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div 
@@ -276,7 +503,7 @@ function App() {
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
               className="absolute top-full left-0 w-full mt-4 glass rounded-3xl border border-white/10 p-4 flex flex-col gap-2 shadow-2xl md:hidden overflow-hidden"
             >
-              <button onClick={() => { setIsProfileModalOpen(true); closeMenu(); }} className={`text-sm font-bold uppercase tracking-widest px-4 py-3 rounded-xl transition text-gray-300 hover:text-white hover:bg-white/5`}>{t('nav.perfil')}</button>
+              <button onClick={() => { setIsProfileModalOpen(true); closeMenu(); }} className="text-sm font-bold uppercase tracking-widest px-4 py-3 rounded-xl transition text-gray-300 hover:text-white hover:bg-white/5">{t('nav.perfil')}</button>
               <a href="#services" onClick={(e) => handleNavClick(e, 'services')} className="text-sm font-bold uppercase tracking-widest px-4 py-3 rounded-xl transition text-gray-300 hover:text-white hover:bg-white/5">{t('nav.servicios')}</a>
               <a href="#procesos" onClick={(e) => handleNavClick(e, 'procesos')} className="text-sm font-bold uppercase tracking-widest px-4 py-3 rounded-xl transition text-gray-300 hover:text-white hover:bg-white/5">{t('nav.procesos')}</a>
               <a href="#certifications" onClick={(e) => handleNavClick(e, 'certifications')} className="text-sm font-bold uppercase tracking-widest px-4 py-3 rounded-xl transition text-gray-300 hover:text-white hover:bg-white/5">{t('nav.certificaciones')}</a>
@@ -331,19 +558,21 @@ function App() {
         </div>
       </section>
 
-      {/* ========== PERFIL Y TRAYECTORIA CON IMAGEN CLICKEABLE ========== */}
+      {/* ========== PERFIL Y TRAYECTORIA ========== */}
       <section id="about" className="py-24 relative z-10 bg-[#0a0a0a] border-t border-white/5">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <div>
-              {/* IMAGEN CLICKEABLE - Abre el modal */}
               <div className="flex justify-center mb-8 cursor-pointer" onClick={() => setIsProfileModalOpen(true)}>
                 <div className="relative group">
                   <div className="w-full max-w-md rounded-2xl overflow-hidden border-2 border-red-500/30 ring-2 ring-white/10 shadow-2xl transition-transform group-hover:scale-105 duration-300">
                     <img 
-                      src="/images/conferencia2.jpg" 
-                      alt="Robert Terán dando conferencia magistral sobre calidad y liderazgo"
+                      src="/images/ibm-coach.jpg" 
+                      alt="Robert Terán - IBM 2025 Coach"
                       className="w-full h-auto object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = '/images/conferencia2.jpg';
+                      }}
                     />
                   </div>
                   <div className="absolute -bottom-4 -right-4 bg-red-600 rounded-full p-3 border-2 border-black shadow-lg">
@@ -353,13 +582,12 @@ function App() {
                     <div className="bg-black/70 backdrop-blur-sm rounded-lg p-2 text-center">
                       <p className="text-white text-xs font-semibold flex items-center justify-center gap-2">
                         <Users className="w-3 h-3 text-red-400" />
-                        {t('about.conference')}
+                        IBM 2025 Coach - Conferencia Internacional
                       </p>
                     </div>
                   </div>
-                  {/* Overlay al hacer hover */}
                   <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl flex items-center justify-center">
-                    <span className="text-white text-sm font-bold bg-red-600/80 px-4 py-2 rounded-full">Ver biografía completa →</span>
+                    <span className="text-white text-sm font-bold bg-red-600/80 px-4 py-2 rounded-full">Ver perfil completo →</span>
                   </div>
                 </div>
               </div>
@@ -369,18 +597,18 @@ function App() {
               </span>
               <h2 className="text-3xl md:text-4xl font-extrabold mb-6 tracking-tight">{t('about.title')}</h2>
               <p className="text-gray-400 text-lg font-light leading-relaxed mb-10">
-                {data.about.bio.substring(0, 400)}...
+                {data.about.bio.substring(0, 350)}...
               </p>
               
               <button 
-                onClick={() => setIsProfileModalOpen(true)}
-                className="flex items-center gap-2 text-red-500 hover:text-red-400 transition font-semibold"
+                onClick={() => setIsBioModalOpen(true)}
+                className="flex items-center gap-2 text-red-500 hover:text-red-400 transition font-semibold mb-6"
               >
-                Leer biografía completa <ArrowRight className="w-4 h-4" />
+                Ver biografía completa <ArrowRight className="w-4 h-4" />
               </button>
               
-              <div className="flex flex-wrap gap-3 mt-6">
-                {data.about.badges.slice(0, 6).map((badge, idx) => {
+              <div className="flex flex-wrap gap-3">
+                {data.about.badges.slice(0, 8).map((badge, idx) => {
                   const Icon = iconMap[badge.icon] || CheckCircle2;
                   return (
                     <div key={idx} className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:border-red-500/50 transition-colors">
@@ -393,30 +621,45 @@ function App() {
             </div>
 
             <div className="space-y-6">
-              {data.about.career.map((block, idx) => (
-                <motion.div 
-                  key={idx}
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  className="glass p-8 rounded-3xl border border-white/5 hover:border-red-500/30 transition-colors"
-                >
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-red-600/10 flex items-center justify-center shrink-0">
-                      <Briefcase className="text-red-500 w-5 h-5" />
-                    </div>
-                    <h3 className="text-xl font-bold text-white">{block.area}</h3>
+              {/* Estándar ISO clickeable */}
+              <div 
+                onClick={() => setIsCertificationsModalOpen(true)}
+                className="cursor-pointer glass p-8 rounded-3xl border border-white/5 hover:border-red-500/30 transition-colors hover:bg-red-500/5"
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-red-600/10 flex items-center justify-center shrink-0 group-hover:bg-red-600/20 transition-colors">
+                    <ShieldCheck className="text-red-500 w-6 h-6" />
                   </div>
-                  <p className="text-gray-400 text-sm mb-6 leading-relaxed">{block.description.substring(0, 150)}...</p>
-                  <div className="flex flex-wrap gap-2">
-                    {block.roles.slice(0, 3).map((role, i) => (
-                      <span key={i} className="text-xs font-mono text-red-400 bg-red-400/10 px-3 py-1.5 rounded-lg border border-red-500/20">
-                        {role}
-                      </span>
-                    ))}
+                  <div>
+                    <h3 className="text-xl font-bold text-white">Estándar ISO</h3>
+                    <p className="text-gray-400 text-sm">Todas las certificaciones ISO disponibles</p>
                   </div>
-                </motion.div>
-              ))}
+                </div>
+                <p className="text-gray-400 text-sm leading-relaxed">Haz clic para ver todas las certificaciones ISO existentes para auditoría y consultoría.</p>
+                <div className="mt-3 text-xs text-red-500 flex items-center gap-1">
+                  Ver todas las certificaciones <ArrowRight className="w-3 h-3" />
+                </div>
+              </div>
+              
+              {/* +30 Años clickeable */}
+              <div 
+                onClick={() => setIsBioModalOpen(true)}
+                className="cursor-pointer glass p-8 rounded-3xl border border-white/5 hover:border-red-500/30 transition-colors hover:bg-red-500/5"
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-red-600/10 flex items-center justify-center shrink-0">
+                    <Award className="text-red-500 w-6 h-6" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-white">+30 Años de Trayectoria</h3>
+                    <p className="text-gray-400 text-sm">Experiencia y logros profesionales</p>
+                  </div>
+                </div>
+                <p className="text-gray-400 text-sm leading-relaxed">Haz clic para conocer mi biografía completa, certificaciones y filosofía profesional.</p>
+                <div className="mt-3 text-xs text-red-500 flex items-center gap-1">
+                  Ver biografía completa <ArrowRight className="w-3 h-3" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -485,7 +728,8 @@ function App() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="md:col-span-1 glass rounded-3xl p-6 bento-card flex flex-col items-center justify-center text-center group"
+              className="md:col-span-1 glass rounded-3xl p-6 bento-card flex flex-col items-center justify-center text-center group cursor-pointer"
+              onClick={() => setIsBioModalOpen(true)}
             >
               <span className="text-4xl font-black text-white group-hover:scale-110 group-hover:text-red-500 transition-all duration-300">{data.metrics.yearsExperience}</span>
               <span className="text-[10px] uppercase tracking-tighter text-gray-500 font-bold mt-1">{data.metrics.label}</span>
@@ -512,7 +756,7 @@ function App() {
         </div>
       </section>
 
-      {/* ========== PROCESS MAPPING & STRUCTURING SECTION ========== */}
+      {/* ========== PROCESS MAPPING & STRUCTURING SECTION (CON IMÁGENES CLICKEABLES) ========== */}
       <section id="procesos" className="py-24 relative z-10 bg-[#050505] border-t border-white/5">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="text-center mb-16">
@@ -531,6 +775,9 @@ function App() {
                 area.icon === 'Network' ? Network :
                 area.icon === 'Workflow' ? Workflow :
                 area.icon === 'FileCheck' ? FileCheck : Activity;
+              
+              // Encontrar ilustración correspondiente
+              const illustration = illustrations.find(ill => ill.title === area.title);
 
               return (
                 <motion.div 
@@ -539,7 +786,8 @@ function App() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  className="glass p-8 rounded-3xl border border-white/5 hover:border-red-500/30 transition-colors group"
+                  className="glass p-8 rounded-3xl border border-white/5 hover:border-red-500/30 transition-colors group cursor-pointer"
+                  onClick={() => illustration && setSelectedIllustration(illustration)}
                 >
                   <div className="flex items-center gap-4 mb-6">
                     <div className="w-12 h-12 rounded-xl bg-red-600/10 flex items-center justify-center shrink-0 group-hover:bg-red-600/20 transition-colors">
@@ -555,6 +803,15 @@ function App() {
                       </li>
                     ))}
                   </ul>
+                  <div className="mt-4 pt-4 border-t border-white/10 flex justify-between items-center">
+                    <span className="text-xs text-gray-500 flex items-center gap-1">
+                      <ImageIcon className="w-3 h-3" />
+                      Ilustración técnica
+                    </span>
+                    <span className="text-xs text-red-500 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
+                      Ver ilustración <ArrowRight className="w-3 h-3" />
+                    </span>
+                  </div>
                 </motion.div>
               );
             })}
@@ -576,14 +833,15 @@ function App() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {data.certifications && data.certifications.map((cert, idx) => (
+            {data.certifications && data.certifications.slice(0, 6).map((cert, idx) => (
               <motion.div 
                 key={idx}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: idx * 0.05 }}
-                className="glass p-8 rounded-3xl border border-white/5 hover:border-red-500/30 transition-colors group"
+                className="glass p-8 rounded-3xl border border-white/5 hover:border-red-500/30 transition-colors group cursor-pointer"
+                onClick={() => setIsCertificationsModalOpen(true)}
               >
                 <div className="flex items-start justify-between mb-6">
                   <div className="flex items-start gap-4">
@@ -602,8 +860,21 @@ function App() {
                   </div>
                 </div>
                 <p className="text-sm text-gray-400 leading-relaxed font-light">{cert.description || 'Certificación profesional en sistemas de gestión.'}</p>
+                <div className="mt-3 text-xs text-red-500 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
+                  Ver todas las certificaciones <ArrowRight className="w-3 h-3" />
+                </div>
               </motion.div>
             ))}
+          </div>
+          
+          <div className="text-center mt-8">
+            <button 
+              onClick={() => setIsCertificationsModalOpen(true)}
+              className="text-red-500 hover:text-red-400 transition font-semibold flex items-center gap-2 mx-auto"
+            >
+              Ver todas las certificaciones ISO disponibles
+              <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
         </div>
       </section>
@@ -657,7 +928,7 @@ function App() {
         </div>
       </section>
 
-      {/* ========== FOOTER / CONTACTO ========== */}
+      {/* ========== FOOTER ========== */}
       <footer id="contact" className="py-12 border-t border-white/5 mt-20">
         <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="text-left">
@@ -701,9 +972,12 @@ function App() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="relative rounded-2xl overflow-hidden min-h-[300px]">
                   <img 
-                    src="/images/conferencia2.jpg" 
-                    alt="Robert Terán - Auditor Líder ISO en conferencia internacional"
+                    src={selectedService.id === 'iso' ? '/images/ibm-coach.jpg' : '/images/conferencia2.jpg'} 
+                    alt={selectedService.title}
                     className="w-full h-full object-cover rounded-2xl"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = '/images/conferencia2.jpg';
+                    }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                   
@@ -711,9 +985,9 @@ function App() {
                     <div className="bg-black/70 backdrop-blur-md rounded-xl p-3 border border-red-500/30">
                       <div className="flex items-center gap-2 mb-1">
                         <ShieldCheck className="w-4 h-4 text-red-500" />
-                        <span className="text-white text-xs font-bold uppercase tracking-wider">{t('modal.badgeISO')}</span>
+                        <span className="text-white text-xs font-bold uppercase tracking-wider">{selectedService.id === 'iso' ? 'Auditor Líder ISO' : 'IBM 2025 Coach'}</span>
                       </div>
-                      <p className="text-gray-300 text-xs">9001 · 14001 · 45001</p>
+                      <p className="text-gray-300 text-xs">+30 años de experiencia</p>
                     </div>
                   </div>
                 </div>
@@ -721,29 +995,45 @@ function App() {
                 <div>
                   <div className="flex items-center gap-4 mb-6">
                     <div className="w-14 h-14 bg-red-600/10 rounded-2xl flex items-center justify-center shrink-0">
-                      <ShieldCheck className="text-red-500 w-7 h-7" />
+                      {selectedService.id === 'iso' ? 
+                        <ShieldCheck className="text-red-500 w-7 h-7" /> : 
+                        <Users className="text-red-500 w-7 h-7" />
+                      }
                     </div>
                     <div>
-                      <h3 className="text-2xl md:text-3xl font-bold text-white">{t('services.auditorTitle')}</h3>
-                      <p className="text-red-400 text-sm font-medium mt-1">{t('services.auditorDesc')}</p>
+                      <h3 className="text-2xl md:text-3xl font-bold text-white">{selectedService.title}</h3>
+                      <p className="text-red-400 text-sm font-medium mt-1">{selectedService.description}</p>
                     </div>
                   </div>
                   
                   <div className="space-y-4">
-                    <p className="text-gray-300 leading-relaxed">{t('modal.description1')}</p>
-                    <p className="text-gray-300 leading-relaxed">{t('modal.description2')}</p>
+                    <p className="text-gray-300 leading-relaxed">
+                      {selectedService.id === 'iso' ? 
+                        "Como Auditor Líder ISO, mi enfoque va más allá del simple cumplimiento normativo. Implemento sistemas de gestión robustos que actúan como el motor de la mejora continua en su organización." :
+                        "Como IBM 2025 Coach certificado, desarrollo programas personalizados de liderazgo ejecutivo para potenciar el talento humano y alcanzar resultados extraordinarios."
+                      }
+                    </p>
+                    
+                    <p className="text-gray-300 leading-relaxed">
+                      {selectedService.id === 'iso' ?
+                        "Mi metodología incluye un diagnóstico profundo (Gap Analysis), diseño de procesos a medida, formación de equipos internos y auditorías de pre-certificación." :
+                        "Mi enfoque combina herramientas de coaching de vanguardia con estrategias probadas de desarrollo organizacional."
+                      }
+                    </p>
                     
                     <div className="bg-red-600/10 border border-red-500/20 rounded-xl p-4">
                       <p className="text-gray-200 text-sm leading-relaxed">
-                        <span className="text-red-400 font-bold">{t('modal.success')}</span><br />
-                        {t('modal.successText')}
+                        <span className="text-red-400 font-bold">{selectedService.id === 'iso' ? '🏆 +50 certificaciones exitosas' : '🏆 +200 ejecutivos formados'}</span><br />
+                        {selectedService.id === 'iso' ?
+                          "He liderado con éxito procesos de certificación en industrias que van desde la manufactura hasta los servicios tecnológicos." :
+                          "He acompañado a líderes de más de 15 países en su transformación personal y profesional."
+                        }
                       </p>
                     </div>
 
                     <div className="flex flex-wrap gap-2 pt-4">
                       <span className="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-gray-400">ISO 9001:2015</span>
                       <span className="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-gray-400">ISO 14001:2015</span>
-                      <span className="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-gray-400">ISO 45001:2018</span>
                       <span className="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-gray-400">Lean Manufacturing</span>
                       <span className="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-gray-400">Six Sigma</span>
                     </div>
@@ -751,7 +1041,7 @@ function App() {
                   
                   <div className="mt-8 flex justify-end">
                     <Link to="/agendar" className="bg-red-600 text-white px-6 py-3 rounded-full font-bold hover:bg-red-700 transition flex items-center gap-2">
-                      {t('modal.schedule')}
+                      Agendar Consultoría
                       <ArrowRight className="w-4 h-4" />
                     </Link>
                   </div>
