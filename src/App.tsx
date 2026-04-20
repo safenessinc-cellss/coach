@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/react';
 import { useState, useEffect } from 'react';
-import { ShieldCheck, Users, Globe, Linkedin, Mail, Award, Network, Workflow, FileCheck, Activity, CheckCircle2, Menu, X, Brain, BarChart3, ShieldAlert, LineChart, Rocket, ClipboardCheck, Briefcase, Map, Quote, ArrowRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { ShieldCheck, Users, Globe, Linkedin, Mail, Award, Network, Workflow, FileCheck, Activity, CheckCircle2, Menu, X, Brain, BarChart3, ShieldAlert, LineChart, Rocket, ClipboardCheck, Briefcase, Map, Quote, ArrowRight, Languages } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Link } from 'react-router-dom';
 import data from './data.json';
@@ -11,11 +12,13 @@ const iconMap: Record<string, any> = {
 };
 
 function App() {
+  const { t, i18n } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('inicio');
   const [isLoading, setIsLoading] = useState(true);
   const [selectedService, setSelectedService] = useState<any>(null);
   const [selectedTestimonial, setSelectedTestimonial] = useState<any>(null);
+  const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -53,6 +56,11 @@ function App() {
     }
   };
 
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+    setIsLangMenuOpen(false);
+  };
+
   return (
     <div className="min-h-screen selection:bg-red-500/30 font-sans">
       {/* SKELETON LOADER OVERLAY */}
@@ -85,6 +93,47 @@ function App() {
         )}
       </AnimatePresence>
 
+      {/* ========== SELECTOR DE IDIOMA FLOTANTE ========== */}
+      <div className="fixed top-20 right-4 z-50">
+        <div className="relative">
+          <button
+            onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
+            className="glass rounded-full p-2 border border-white/10 hover:border-red-500/50 transition-colors"
+          >
+            <Languages className="w-5 h-5 text-white" />
+          </button>
+          <AnimatePresence>
+            {isLangMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                className="absolute top-full right-0 mt-2 glass rounded-xl border border-white/10 p-2 shadow-2xl"
+              >
+                <button
+                  onClick={() => changeLanguage('es')}
+                  className={`block w-full text-left px-4 py-2 text-sm rounded-lg transition ${i18n.language === 'es' ? 'bg-red-600 text-white' : 'text-gray-300 hover:bg-white/10'}`}
+                >
+                  🇪🇸 Español
+                </button>
+                <button
+                  onClick={() => changeLanguage('en')}
+                  className={`block w-full text-left px-4 py-2 text-sm rounded-lg transition ${i18n.language === 'en' ? 'bg-red-600 text-white' : 'text-gray-300 hover:bg-white/10'}`}
+                >
+                  🇬🇧 English
+                </button>
+                <button
+                  onClick={() => changeLanguage('pt')}
+                  className={`block w-full text-left px-4 py-2 text-sm rounded-lg transition ${i18n.language === 'pt' ? 'bg-red-600 text-white' : 'text-gray-300 hover:bg-white/10'}`}
+                >
+                  🇵🇹 Português
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+
       {/* ========== HEADER CON LOGO CORPORATIVO ========== */}
       <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] md:w-[90%] max-w-4xl">
         <div className="glass rounded-full px-4 md:px-6 py-2 flex justify-between items-center border border-white/10">
@@ -101,12 +150,12 @@ function App() {
           </div>
           
           <div className="hidden md:flex gap-6 text-xs font-medium uppercase tracking-widest text-gray-400 items-center">
-            <a href="#about" onClick={(e) => handleNavClick(e, 'about')} className={`transition ${activeSection === 'about' ? 'text-red-500' : 'hover:text-red-500'}`}>Perfil</a>
-            <a href="#services" onClick={(e) => handleNavClick(e, 'services')} className={`transition ${activeSection === 'services' ? 'text-red-500' : 'hover:text-red-500'}`}>Servicios</a>
-            <a href="#procesos" onClick={(e) => handleNavClick(e, 'procesos')} className={`transition ${activeSection === 'procesos' ? 'text-red-500' : 'hover:text-red-500'}`}>Procesos</a>
-            <a href="#certifications" onClick={(e) => handleNavClick(e, 'certifications')} className={`transition ${activeSection === 'certifications' ? 'text-red-500' : 'hover:text-red-500'}`}>Certificaciones</a>
+            <a href="#about" onClick={(e) => handleNavClick(e, 'about')} className={`transition ${activeSection === 'about' ? 'text-red-500' : 'hover:text-red-500'}`}>{t('nav.perfil')}</a>
+            <a href="#services" onClick={(e) => handleNavClick(e, 'services')} className={`transition ${activeSection === 'services' ? 'text-red-500' : 'hover:text-red-500'}`}>{t('nav.servicios')}</a>
+            <a href="#procesos" onClick={(e) => handleNavClick(e, 'procesos')} className={`transition ${activeSection === 'procesos' ? 'text-red-500' : 'hover:text-red-500'}`}>{t('nav.procesos')}</a>
+            <a href="#certifications" onClick={(e) => handleNavClick(e, 'certifications')} className={`transition ${activeSection === 'certifications' ? 'text-red-500' : 'hover:text-red-500'}`}>{t('nav.certificaciones')}</a>
             <Link to="/agendar" className="bg-white text-black px-4 py-1.5 rounded-full hover:bg-red-600 hover:text-white transition text-center">
-              Contacto
+              {t('nav.contacto')}
             </Link>
           </div>
 
@@ -123,13 +172,13 @@ function App() {
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
               className="absolute top-full left-0 w-full mt-4 glass rounded-3xl border border-white/10 p-4 flex flex-col gap-2 shadow-2xl md:hidden overflow-hidden"
             >
-              <a href="#about" onClick={(e) => handleNavClick(e, 'about')} className={`text-sm font-bold uppercase tracking-widest px-4 py-3 rounded-xl transition ${activeSection === 'about' ? 'text-white bg-white/10' : 'text-gray-300 hover:text-white hover:bg-white/5'}`}>Perfil</a>
-              <a href="#services" onClick={(e) => handleNavClick(e, 'services')} className={`text-sm font-bold uppercase tracking-widest px-4 py-3 rounded-xl transition ${activeSection === 'services' ? 'text-white bg-white/10' : 'text-gray-300 hover:text-white hover:bg-white/5'}`}>Servicios</a>
-              <a href="#procesos" onClick={(e) => handleNavClick(e, 'procesos')} className={`text-sm font-bold uppercase tracking-widest px-4 py-3 rounded-xl transition ${activeSection === 'procesos' ? 'text-white bg-white/10' : 'text-gray-300 hover:text-white hover:bg-white/5'}`}>Procesos</a>
-              <a href="#certifications" onClick={(e) => handleNavClick(e, 'certifications')} className={`text-sm font-bold uppercase tracking-widest px-4 py-3 rounded-xl transition ${activeSection === 'certifications' ? 'text-white bg-white/10' : 'text-gray-300 hover:text-white hover:bg-white/5'}`}>Certificaciones</a>
+              <a href="#about" onClick={(e) => handleNavClick(e, 'about')} className={`text-sm font-bold uppercase tracking-widest px-4 py-3 rounded-xl transition ${activeSection === 'about' ? 'text-white bg-white/10' : 'text-gray-300 hover:text-white hover:bg-white/5'}`}>{t('nav.perfil')}</a>
+              <a href="#services" onClick={(e) => handleNavClick(e, 'services')} className={`text-sm font-bold uppercase tracking-widest px-4 py-3 rounded-xl transition ${activeSection === 'services' ? 'text-white bg-white/10' : 'text-gray-300 hover:text-white hover:bg-white/5'}`}>{t('nav.servicios')}</a>
+              <a href="#procesos" onClick={(e) => handleNavClick(e, 'procesos')} className={`text-sm font-bold uppercase tracking-widest px-4 py-3 rounded-xl transition ${activeSection === 'procesos' ? 'text-white bg-white/10' : 'text-gray-300 hover:text-white hover:bg-white/5'}`}>{t('nav.procesos')}</a>
+              <a href="#certifications" onClick={(e) => handleNavClick(e, 'certifications')} className={`text-sm font-bold uppercase tracking-widest px-4 py-3 rounded-xl transition ${activeSection === 'certifications' ? 'text-white bg-white/10' : 'text-gray-300 hover:text-white hover:bg-white/5'}`}>{t('nav.certificaciones')}</a>
               <div className="h-px w-full bg-white/10 my-2"></div>
               <Link to="/agendar" onClick={closeMenu} className="bg-red-600 text-white px-4 py-4 rounded-xl hover:bg-red-700 transition text-center font-bold uppercase tracking-widest text-sm flex items-center justify-center gap-2">
-                Agendar Consulta
+                {t('footer.agendar')}
               </Link>
             </motion.div>
           )}
@@ -166,13 +215,13 @@ function App() {
             className="text-center"
           >
             <span className="inline-block px-4 py-1 rounded-full border border-red-500/30 bg-red-500/10 text-red-500 text-xs font-bold mb-6 tracking-[0.2em] uppercase">
-              Soluciones de Ingeniería & Liderazgo
+              {t('hero.badge')}
             </span>
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter leading-none mb-8">
-              La Calidad es <br /> <span className="text-white/40">Innegociable.</span>
+              {t('hero.title')} <br /> <span className="text-white/40">{t('hero.titleHighlight')}</span>
             </h1>
             <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
-              {data.profile.description}
+              {t('hero.description')}
             </p>
           </motion.div>
         </div>
@@ -199,7 +248,7 @@ function App() {
                     <div className="bg-black/70 backdrop-blur-sm rounded-lg p-2 text-center">
                       <p className="text-white text-xs font-semibold flex items-center justify-center gap-2">
                         <Users className="w-3 h-3 text-red-400" />
-                        Conferencia Internacional - Gestión de Calidad
+                        {t('about.conference')}
                       </p>
                     </div>
                   </div>
@@ -207,9 +256,9 @@ function App() {
               </div>
               
               <span className="inline-block px-4 py-1 rounded-full border border-red-500/30 bg-red-500/10 text-red-500 text-xs font-bold mb-6 tracking-[0.2em] uppercase">
-                Perfil Profesional
+                {t('about.badge')}
               </span>
-              <h2 className="text-3xl md:text-4xl font-extrabold mb-6 tracking-tight">Más de 30 años de Excelencia</h2>
+              <h2 className="text-3xl md:text-4xl font-extrabold mb-6 tracking-tight">{t('about.title')}</h2>
               <p className="text-gray-400 text-lg font-light leading-relaxed mb-10">
                 {data.about.bio}
               </p>
@@ -262,9 +311,9 @@ function App() {
         <div className="container mx-auto max-w-6xl px-4">
           <div className="text-center mb-16">
             <span className="inline-block px-4 py-1 rounded-full border border-red-500/30 bg-red-500/10 text-red-500 text-xs font-bold mb-6 tracking-[0.2em] uppercase">
-              Mis Servicios
+              {t('services.badge')}
             </span>
-            <h2 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">Ecosistema de Soluciones</h2>
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">{t('services.title')}</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[180px]">
@@ -277,10 +326,10 @@ function App() {
               className="md:col-span-2 md:row-span-2 glass rounded-3xl p-8 bento-card flex flex-col justify-end relative overflow-hidden group cursor-pointer"
             >
               <ShieldCheck className="absolute top-8 right-8 w-16 h-16 text-red-600/20 group-hover:scale-110 group-hover:text-red-500/40 transition-all duration-500" />
-              <h3 className="text-2xl font-bold mb-2 group-hover:text-red-400 transition-colors">{data.services[0].title}</h3>
-              <p className="text-gray-400 text-sm max-w-md">{data.services[0].description}</p>
+              <h3 className="text-2xl font-bold mb-2 group-hover:text-red-400 transition-colors">{t('services.auditorTitle')}</h3>
+              <p className="text-gray-400 text-sm max-w-md">{t('services.auditorDesc')}</p>
               <div className="mt-4 text-xs font-bold text-red-500 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
-                Ver detalles <ArrowRight className="w-3 h-3" />
+                {t('services.details')} <ArrowRight className="w-3 h-3" />
               </div>
             </motion.div>
 
@@ -295,8 +344,8 @@ function App() {
                 <Users className="text-red-500 w-8 h-8 group-hover:scale-110 transition-all duration-300" />
               </div>
               <div className="flex-1">
-                <h3 className="text-xl font-bold group-hover:text-red-400 transition-colors">{data.services[1].title}</h3>
-                <p className="text-gray-400 text-sm italic">{data.services[1].description}</p>
+                <h3 className="text-xl font-bold group-hover:text-red-400 transition-colors">{t('services.coachTitle')}</h3>
+                <p className="text-gray-400 text-sm italic">{t('services.coachDesc')}</p>
               </div>
               <div className="hidden md:block text-xs font-bold text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
                 <ArrowRight className="w-4 h-4" />
@@ -403,11 +452,11 @@ function App() {
         <div className="container mx-auto max-w-6xl px-4">
           <div className="text-center mb-16">
             <span className="inline-block px-4 py-1 rounded-full border border-red-500/30 bg-red-500/10 text-red-500 text-xs font-bold mb-6 tracking-[0.2em] uppercase">
-              El Estándar de Oro
+              {t('certifications.badge')}
             </span>
-            <h2 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">{data.certificationsInfo.title}</h2>
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">{t('certifications.title')}</h2>
             <p className="text-gray-400 max-w-3xl mx-auto text-lg font-light leading-relaxed">
-              {data.certificationsInfo.description}
+              {t('certifications.description')}
             </p>
           </div>
           
@@ -449,9 +498,9 @@ function App() {
         <div className="container mx-auto max-w-6xl px-4">
           <div className="text-center mb-16">
             <span className="inline-block px-4 py-1 rounded-full border border-red-500/30 bg-red-500/10 text-red-500 text-xs font-bold mb-6 tracking-[0.2em] uppercase">
-              Casos de Éxito
+              {t('testimonials.badge')}
             </span>
-            <h2 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">Lo que dicen nuestros clientes</h2>
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">{t('testimonials.title')}</h2>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -484,7 +533,7 @@ function App() {
                     </div>
                   </div>
                   <div className="text-xs font-bold text-red-500 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
-                    Ver caso <ArrowRight className="w-3 h-3" />
+                    {t('testimonials.viewCase')} <ArrowRight className="w-3 h-3" />
                   </div>
                 </div>
               </motion.div>
@@ -545,12 +594,11 @@ function App() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                   
-                  {/* Badge flotante */}
                   <div className="absolute bottom-4 left-4 right-4">
                     <div className="bg-black/70 backdrop-blur-md rounded-xl p-3 border border-red-500/30">
                       <div className="flex items-center gap-2 mb-1">
                         <ShieldCheck className="w-4 h-4 text-red-500" />
-                        <span className="text-white text-xs font-bold uppercase tracking-wider">Auditor Líder ISO</span>
+                        <span className="text-white text-xs font-bold uppercase tracking-wider">{t('modal.badgeISO')}</span>
                       </div>
                       <p className="text-gray-300 text-xs">9001 · 14001 · 45001</p>
                     </div>
@@ -561,30 +609,27 @@ function App() {
                 <div>
                   <div className="flex items-center gap-4 mb-6">
                     <div className="w-14 h-14 bg-red-600/10 rounded-2xl flex items-center justify-center shrink-0">
-                      {selectedService.id === 'iso' ? 
-                        <ShieldCheck className="text-red-500 w-7 h-7" /> : 
-                        <Users className="text-red-500 w-7 h-7" />
-                      }
+                      <ShieldCheck className="text-red-500 w-7 h-7" />
                     </div>
                     <div>
-                      <h3 className="text-2xl md:text-3xl font-bold text-white">{selectedService.title}</h3>
-                      <p className="text-red-400 text-sm font-medium mt-1">{selectedService.description}</p>
+                      <h3 className="text-2xl md:text-3xl font-bold text-white">{t('services.auditorTitle')}</h3>
+                      <p className="text-red-400 text-sm font-medium mt-1">{t('services.auditorDesc')}</p>
                     </div>
                   </div>
                   
                   <div className="space-y-4">
                     <p className="text-gray-300 leading-relaxed">
-                      Como <span className="text-red-400 font-semibold">Auditor Líder ISO</span>, mi enfoque va más allá del simple cumplimiento normativo. Implemento sistemas de gestión robustos que actúan como el motor de la mejora continua en su organización.
+                      {t('modal.description1')}
                     </p>
                     
                     <p className="text-gray-300 leading-relaxed">
-                      Mi metodología incluye un diagnóstico profundo (Gap Analysis), diseño de procesos a medida, formación de equipos internos y auditorías de pre-certificación.
+                      {t('modal.description2')}
                     </p>
                     
                     <div className="bg-red-600/10 border border-red-500/20 rounded-xl p-4">
                       <p className="text-gray-200 text-sm leading-relaxed">
-                        <span className="text-red-400 font-bold">🏆 +50 certificaciones exitosas</span><br />
-                        He liderado con éxito procesos de certificación en industrias que van desde la manufactura hasta los servicios tecnológicos, asegurando no solo el certificado, sino una transformación real en la cultura de calidad de la empresa.
+                        <span className="text-red-400 font-bold">{t('modal.success')}</span><br />
+                        {t('modal.successText')}
                       </p>
                     </div>
 
@@ -602,7 +647,7 @@ function App() {
                       to="/agendar" 
                       className="bg-red-600 text-white px-6 py-3 rounded-full font-bold hover:bg-red-700 transition flex items-center gap-2"
                     >
-                      Agendar Consultoría ISO
+                      {t('modal.schedule')}
                       <ArrowRight className="w-4 h-4" />
                     </Link>
                   </div>
