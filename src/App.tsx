@@ -1,7 +1,7 @@
 import { Analytics } from '@vercel/analytics/react';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ShieldCheck, Users, Globe, Linkedin, Mail, Award, Network, Workflow, FileCheck, Activity, CheckCircle2, Menu, X, Brain, BarChart3, ShieldAlert, LineChart, Rocket, ClipboardCheck, Briefcase, Map, Quote, ArrowRight } from 'lucide-react';
+import { ShieldCheck, Users, Globe, Linkedin, Mail, Award, Network, Workflow, FileCheck, Activity, CheckCircle2, Menu, X, Brain, BarChart3, ShieldAlert, LineChart, Rocket, ClipboardCheck, Briefcase, Map, Quote, ArrowRight, Download, ExternalLink, Calendar, MapPin } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Link } from 'react-router-dom';
 import data from './data.json';
@@ -18,6 +18,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedService, setSelectedService] = useState<any>(null);
   const [selectedTestimonial, setSelectedTestimonial] = useState<any>(null);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -91,11 +92,142 @@ function App() {
         )}
       </AnimatePresence>
 
-      {/* ========== HEADER CON LOGO CORPORATIVO Y SELECTOR DE IDIOMA ========== */}
+      {/* ========== MODAL DE PERFIL / BIOGRAFÍA ========== */}
+      <AnimatePresence>
+        {isProfileModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[300] bg-black/95 backdrop-blur-md flex items-center justify-center p-4"
+            onClick={() => setIsProfileModalOpen(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-[#0a0a0a] border border-white/10 rounded-3xl p-6 md:p-8 max-w-5xl w-full max-h-[90vh] overflow-y-auto relative"
+            >
+              <button 
+                onClick={() => setIsProfileModalOpen(false)}
+                className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors z-10 bg-black/50 rounded-full p-2"
+              >
+                <X className="w-6 h-6" />
+              </button>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* LADO IZQUIERDO - IMAGEN Y DATOS BÁSICOS */}
+                <div className="space-y-4">
+                  <div className="relative rounded-2xl overflow-hidden border-2 border-red-500/30 shadow-2xl">
+                    <img 
+                      src="/images/conferencia2.jpg" 
+                      alt="Robert Terán - Perfil Profesional"
+                      className="w-full h-auto object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <div className="bg-black/70 backdrop-blur-md rounded-xl p-3 border border-red-500/30">
+                        <div className="flex items-center gap-2 mb-1">
+                          <Award className="w-4 h-4 text-red-500" />
+                          <span className="text-white text-xs font-bold uppercase tracking-wider">Coach · Auditor · Developer</span>
+                        </div>
+                        <p className="text-gray-300 text-xs">+30 años de experiencia</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex gap-3 justify-center">
+                    <a href={data.profile.linkedin} target="_blank" rel="noopener noreferrer" className="bg-blue-600/20 hover:bg-blue-600 transition-colors p-3 rounded-full">
+                      <Linkedin className="w-5 h-5 text-blue-400" />
+                    </a>
+                    <a href={`mailto:${data.profile.email}`} className="bg-red-600/20 hover:bg-red-600 transition-colors p-3 rounded-full">
+                      <Mail className="w-5 h-5 text-red-400" />
+                    </a>
+                    <button className="bg-green-600/20 hover:bg-green-600 transition-colors p-3 rounded-full">
+                      <Download className="w-5 h-5 text-green-400" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* LADO DERECHO - BIOGRAFÍA COMPLETA */}
+                <div className="space-y-5">
+                  <div className="border-b border-white/10 pb-4">
+                    <h2 className="text-3xl md:text-4xl font-bold text-white">{data.profile.name}</h2>
+                    <p className="text-red-400 font-medium mt-1">{data.profile.title}</p>
+                    <p className="text-gray-400 text-sm mt-2">{data.profile.subtitle}</p>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-lg font-semibold text-white flex items-center gap-2 mb-3">
+                      <Briefcase className="w-4 h-4 text-red-500" />
+                      Perfil Profesional
+                    </h3>
+                    <p className="text-gray-300 text-sm leading-relaxed">{data.about.bio}</p>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-lg font-semibold text-white flex items-center gap-2 mb-3">
+                      <Award className="w-4 h-4 text-red-500" />
+                      Certificaciones y Especialidades
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {data.about.badges.map((badge, idx) => {
+                        const Icon = iconMap[badge.icon] || CheckCircle2;
+                        return (
+                          <div key={idx} className="flex items-center gap-1 bg-white/5 border border-white/10 rounded-full px-3 py-1.5">
+                            <Icon className="w-3 h-3 text-red-500" />
+                            <span className="text-xs text-gray-300">{badge.label}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-lg font-semibold text-white flex items-center gap-2 mb-3">
+                      <Activity className="w-4 h-4 text-red-500" />
+                      Trayectoria Profesional
+                    </h3>
+                    <div className="space-y-3 max-h-[220px] overflow-y-auto pr-2 custom-scrollbar">
+                      {data.about.career.map((block, idx) => (
+                        <div key={idx} className="bg-white/5 rounded-xl p-3 border border-white/10">
+                          <h4 className="text-sm font-bold text-white">{block.area}</h4>
+                          <p className="text-gray-400 text-xs mt-1 leading-relaxed">{block.description}</p>
+                          <div className="flex flex-wrap gap-1 mt-2">
+                            {block.roles.map((role, i) => (
+                              <span key={i} className="text-[10px] text-red-400 bg-red-400/10 px-2 py-0.5 rounded">
+                                {role}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div className="pt-3 flex justify-end gap-3">
+                    <Link 
+                      to="/agendar" 
+                      onClick={() => setIsProfileModalOpen(false)}
+                      className="bg-red-600 text-white px-5 py-2 rounded-full font-bold hover:bg-red-700 transition flex items-center gap-2 text-sm"
+                    >
+                      Agendar Consultoría
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ========== HEADER CON LOGO Y SELECTOR DE IDIOMA ========== */}
       <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] md:w-[90%] max-w-5xl">
         <div className="glass rounded-full px-4 md:px-6 py-2 flex justify-between items-center border border-white/10">
-          {/* LOGO */}
-          <div className="flex items-center gap-3">
+          {/* LOGO - Click para abrir perfil */}
+          <div className="flex items-center gap-3 cursor-pointer" onClick={() => setIsProfileModalOpen(true)}>
             <img 
               src="/images/logo-robert-teran.png" 
               alt="Robert Teran" 
@@ -109,58 +241,33 @@ function App() {
           
           {/* MENÚ DE NAVEGACIÓN + SELECTOR DE IDIOMA */}
           <div className="hidden md:flex items-center gap-6">
-            {/* Enlaces de navegación */}
             <div className="flex gap-6 text-xs font-medium uppercase tracking-widest text-gray-400 items-center">
-              <a href="#about" onClick={(e) => handleNavClick(e, 'about')} className={`transition ${activeSection === 'about' ? 'text-red-500' : 'hover:text-red-500'}`}>{t('nav.perfil')}</a>
+              <button onClick={() => setIsProfileModalOpen(true)} className={`transition ${activeSection === 'about' ? 'text-red-500' : 'hover:text-red-500'}`}>{t('nav.perfil')}</button>
               <a href="#services" onClick={(e) => handleNavClick(e, 'services')} className={`transition ${activeSection === 'services' ? 'text-red-500' : 'hover:text-red-500'}`}>{t('nav.servicios')}</a>
               <a href="#procesos" onClick={(e) => handleNavClick(e, 'procesos')} className={`transition ${activeSection === 'procesos' ? 'text-red-500' : 'hover:text-red-500'}`}>{t('nav.procesos')}</a>
               <a href="#certifications" onClick={(e) => handleNavClick(e, 'certifications')} className={`transition ${activeSection === 'certifications' ? 'text-red-500' : 'hover:text-red-500'}`}>{t('nav.certificaciones')}</a>
             </div>
             
-            {/* Separador */}
             <div className="w-px h-6 bg-white/20"></div>
             
-            {/* SELECTOR DE IDIOMA EN EL HEADER */}
             <div className="flex gap-1 text-sm font-semibold">
-              <button 
-                onClick={() => changeLanguage('es')} 
-                className={`px-2 py-1 rounded-md transition ${i18n.language === 'es' ? 'bg-red-600 text-white' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
-              >
-                ES
-              </button>
-              <button 
-                onClick={() => changeLanguage('en')} 
-                className={`px-2 py-1 rounded-md transition ${i18n.language === 'en' ? 'bg-red-600 text-white' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
-              >
-                EN
-              </button>
-              <button 
-                onClick={() => changeLanguage('pt')} 
-                className={`px-2 py-1 rounded-md transition ${i18n.language === 'pt' ? 'bg-red-600 text-white' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
-              >
-                PT
-              </button>
-              <button 
-                onClick={() => changeLanguage('it')} 
-                className={`px-2 py-1 rounded-md transition ${i18n.language === 'it' ? 'bg-red-600 text-white' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
-              >
-                IT
-              </button>
+              <button onClick={() => changeLanguage('es')} className={`px-2 py-1 rounded-md transition ${i18n.language === 'es' ? 'bg-red-600 text-white' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}>ES</button>
+              <button onClick={() => changeLanguage('en')} className={`px-2 py-1 rounded-md transition ${i18n.language === 'en' ? 'bg-red-600 text-white' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}>EN</button>
+              <button onClick={() => changeLanguage('pt')} className={`px-2 py-1 rounded-md transition ${i18n.language === 'pt' ? 'bg-red-600 text-white' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}>PT</button>
+              <button onClick={() => changeLanguage('it')} className={`px-2 py-1 rounded-md transition ${i18n.language === 'it' ? 'bg-red-600 text-white' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}>IT</button>
             </div>
             
-            {/* Botón Contacto */}
             <Link to="/agendar" className="bg-white text-black px-4 py-1.5 rounded-full hover:bg-red-600 hover:text-white transition text-center text-xs font-medium uppercase tracking-widest">
               {t('nav.contacto')}
             </Link>
           </div>
 
-          {/* Botón Mobile */}
           <button className="md:hidden text-white p-2" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
-        {/* Menú Mobile con selector de idioma */}
+        {/* Menú Mobile */}
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div 
@@ -169,12 +276,11 @@ function App() {
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
               className="absolute top-full left-0 w-full mt-4 glass rounded-3xl border border-white/10 p-4 flex flex-col gap-2 shadow-2xl md:hidden overflow-hidden"
             >
-              <a href="#about" onClick={(e) => handleNavClick(e, 'about')} className={`text-sm font-bold uppercase tracking-widest px-4 py-3 rounded-xl transition ${activeSection === 'about' ? 'text-white bg-white/10' : 'text-gray-300 hover:text-white hover:bg-white/5'}`}>{t('nav.perfil')}</a>
-              <a href="#services" onClick={(e) => handleNavClick(e, 'services')} className={`text-sm font-bold uppercase tracking-widest px-4 py-3 rounded-xl transition ${activeSection === 'services' ? 'text-white bg-white/10' : 'text-gray-300 hover:text-white hover:bg-white/5'}`}>{t('nav.servicios')}</a>
-              <a href="#procesos" onClick={(e) => handleNavClick(e, 'procesos')} className={`text-sm font-bold uppercase tracking-widest px-4 py-3 rounded-xl transition ${activeSection === 'procesos' ? 'text-white bg-white/10' : 'text-gray-300 hover:text-white hover:bg-white/5'}`}>{t('nav.procesos')}</a>
-              <a href="#certifications" onClick={(e) => handleNavClick(e, 'certifications')} className={`text-sm font-bold uppercase tracking-widest px-4 py-3 rounded-xl transition ${activeSection === 'certifications' ? 'text-white bg-white/10' : 'text-gray-300 hover:text-white hover:bg-white/5'}`}>{t('nav.certificaciones')}</a>
+              <button onClick={() => { setIsProfileModalOpen(true); closeMenu(); }} className={`text-sm font-bold uppercase tracking-widest px-4 py-3 rounded-xl transition text-gray-300 hover:text-white hover:bg-white/5`}>{t('nav.perfil')}</button>
+              <a href="#services" onClick={(e) => handleNavClick(e, 'services')} className="text-sm font-bold uppercase tracking-widest px-4 py-3 rounded-xl transition text-gray-300 hover:text-white hover:bg-white/5">{t('nav.servicios')}</a>
+              <a href="#procesos" onClick={(e) => handleNavClick(e, 'procesos')} className="text-sm font-bold uppercase tracking-widest px-4 py-3 rounded-xl transition text-gray-300 hover:text-white hover:bg-white/5">{t('nav.procesos')}</a>
+              <a href="#certifications" onClick={(e) => handleNavClick(e, 'certifications')} className="text-sm font-bold uppercase tracking-widest px-4 py-3 rounded-xl transition text-gray-300 hover:text-white hover:bg-white/5">{t('nav.certificaciones')}</a>
               
-              {/* Selector de idioma en mobile */}
               <div className="flex gap-2 justify-center py-3 mt-2 border-t border-white/10 pt-3">
                 <button onClick={() => changeLanguage('es')} className={`px-3 py-1 rounded-md text-sm font-semibold ${i18n.language === 'es' ? 'bg-red-600 text-white' : 'text-gray-400 bg-white/5'}`}>ES</button>
                 <button onClick={() => changeLanguage('en')} className={`px-3 py-1 rounded-md text-sm font-semibold ${i18n.language === 'en' ? 'bg-red-600 text-white' : 'text-gray-400 bg-white/5'}`}>EN</button>
@@ -191,7 +297,7 @@ function App() {
         </AnimatePresence>
       </nav>
 
-      {/* ========== HERO SECTION CON IMAGEN DE CONFERENCIA 1 ========== */}
+      {/* ========== HERO SECTION ========== */}
       <section id="inicio" className="relative min-h-screen flex items-center justify-center pt-32 pb-20 px-4 overflow-hidden">
         <div 
           className="absolute inset-0 z-0"
@@ -203,14 +309,6 @@ function App() {
           }}
         >
           <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/70 to-black/80"></div>
-        </div>
-
-        <div className="absolute top-40 right-8 z-10 opacity-10 hidden lg:block">
-          <img 
-            src="/images/logo-robert-teran.png" 
-            alt="Logo" 
-            className="w-48 h-48 object-contain"
-          />
         </div>
 
         <div className="container mx-auto max-w-6xl relative z-10">
@@ -233,18 +331,19 @@ function App() {
         </div>
       </section>
 
-      {/* ========== PERFIL Y TRAYECTORIA CON IMAGEN DE CONFERENCIA 2 ========== */}
+      {/* ========== PERFIL Y TRAYECTORIA CON IMAGEN CLICKEABLE ========== */}
       <section id="about" className="py-24 relative z-10 bg-[#0a0a0a] border-t border-white/5">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <div>
-              <div className="flex justify-center mb-8">
-                <div className="relative">
-                  <div className="w-full max-w-md rounded-2xl overflow-hidden border-2 border-red-500/30 ring-2 ring-white/10 shadow-2xl">
+              {/* IMAGEN CLICKEABLE - Abre el modal */}
+              <div className="flex justify-center mb-8 cursor-pointer" onClick={() => setIsProfileModalOpen(true)}>
+                <div className="relative group">
+                  <div className="w-full max-w-md rounded-2xl overflow-hidden border-2 border-red-500/30 ring-2 ring-white/10 shadow-2xl transition-transform group-hover:scale-105 duration-300">
                     <img 
                       src="/images/conferencia2.jpg" 
                       alt="Robert Terán dando conferencia magistral sobre calidad y liderazgo"
-                      className="w-full h-auto object-cover hover:scale-105 transition-transform duration-700"
+                      className="w-full h-auto object-cover"
                     />
                   </div>
                   <div className="absolute -bottom-4 -right-4 bg-red-600 rounded-full p-3 border-2 border-black shadow-lg">
@@ -258,6 +357,10 @@ function App() {
                       </p>
                     </div>
                   </div>
+                  {/* Overlay al hacer hover */}
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl flex items-center justify-center">
+                    <span className="text-white text-sm font-bold bg-red-600/80 px-4 py-2 rounded-full">Ver biografía completa →</span>
+                  </div>
                 </div>
               </div>
               
@@ -266,11 +369,18 @@ function App() {
               </span>
               <h2 className="text-3xl md:text-4xl font-extrabold mb-6 tracking-tight">{t('about.title')}</h2>
               <p className="text-gray-400 text-lg font-light leading-relaxed mb-10">
-                {data.about.bio}
+                {data.about.bio.substring(0, 400)}...
               </p>
               
-              <div className="flex flex-wrap gap-3">
-                {data.about.badges.map((badge, idx) => {
+              <button 
+                onClick={() => setIsProfileModalOpen(true)}
+                className="flex items-center gap-2 text-red-500 hover:text-red-400 transition font-semibold"
+              >
+                Leer biografía completa <ArrowRight className="w-4 h-4" />
+              </button>
+              
+              <div className="flex flex-wrap gap-3 mt-6">
+                {data.about.badges.slice(0, 6).map((badge, idx) => {
                   const Icon = iconMap[badge.icon] || CheckCircle2;
                   return (
                     <div key={idx} className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:border-red-500/50 transition-colors">
@@ -297,9 +407,9 @@ function App() {
                     </div>
                     <h3 className="text-xl font-bold text-white">{block.area}</h3>
                   </div>
-                  <p className="text-gray-400 text-sm mb-6 leading-relaxed">{block.description}</p>
+                  <p className="text-gray-400 text-sm mb-6 leading-relaxed">{block.description.substring(0, 150)}...</p>
                   <div className="flex flex-wrap gap-2">
-                    {block.roles.map((role, i) => (
+                    {block.roles.slice(0, 3).map((role, i) => (
                       <span key={i} className="text-xs font-mono text-red-400 bg-red-400/10 px-3 py-1.5 rounded-lg border border-red-500/20">
                         {role}
                       </span>
@@ -381,7 +491,6 @@ function App() {
               <span className="text-[10px] uppercase tracking-tighter text-gray-500 font-bold mt-1">{data.metrics.label}</span>
             </motion.div>
 
-            {/* SECCIÓN GLOBAL REACH - SOLO VISUAL (SIN CLICK) */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -565,7 +674,7 @@ function App() {
         </div>
       </footer>
 
-      {/* ========== MODALS ========== */}
+      {/* ========== MODALS DE SERVICIOS Y TESTIMONIOS ========== */}
       <AnimatePresence>
         {selectedService && (
           <motion.div
