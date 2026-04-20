@@ -1,6 +1,4 @@
-"global": {
-  "title": "Global Reach"
-}
+{
   "nav": {
     "perfil": "Profile",
     "servicios": "Services",
@@ -17,20 +15,15 @@
   "about": {
     "badge": "Professional Profile",
     "title": "Over 30 Years of Excellence",
-    "bio": "Versatile professional certified as IBM 2025 Coach with over 30 years of industry experience. Solid track record in quality and environmental management systems...",
     "conference": "International Conference - Quality Management"
   },
   "services": {
     "badge": "My Services",
     "title": "Solution Ecosystem",
-    "auditor": {
-      "title": "Lead ISO Auditor",
-      "description": "Specialist in Quality (9001) and Environmental (14001) Management Systems. Over 30 years ensuring operational excellence."
-    },
-    "coach": {
-      "title": "IBM 2025 Coach",
-      "description": "Leadership that inspires results."
-    },
+    "auditorTitle": "Lead ISO Auditor",
+    "auditorDesc": "Specialist in Quality (9001) and Environmental (14001) Management Systems. Over 30 years ensuring operational excellence.",
+    "coachTitle": "IBM 2025 Coach",
+    "coachDesc": "Leadership that inspires results.",
     "details": "View details"
   },
   "certifications": {
@@ -46,7 +39,15 @@
   "footer": {
     "agendar": "Schedule Consultation"
   },
-  "modals": {
-    "schedule": "Schedule ISO Consulting"
+  "modal": {
+    "schedule": "Schedule ISO Consulting",
+    "badgeISO": "Lead ISO Auditor",
+    "description1": "As a Lead ISO Auditor, my approach goes beyond simple regulatory compliance. I implement robust management systems that act as the engine of continuous improvement in your organization.",
+    "description2": "My methodology includes deep diagnostics (Gap Analysis), custom process design, internal team training, and pre-certification audits.",
+    "success": "🏆 +50 successful certifications",
+    "successText": "I have successfully led certification processes in industries ranging from manufacturing to technology services, ensuring not just the certificate but a real transformation in the company's quality culture."
+  },
+  "global": {
+    "title": "Global Reach"
   }
 }
