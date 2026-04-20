@@ -1,7 +1,7 @@
 import { Analytics } from '@vercel/analytics/react';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ShieldCheck, Users, Globe, Linkedin, Mail, Award, Network, Workflow, FileCheck, Activity, CheckCircle2, Menu, X, Brain, BarChart3, ShieldAlert, LineChart, Rocket, ClipboardCheck, Briefcase, Map, Quote, ArrowRight, Image as ImageIcon } from 'lucide-react';
+import { ShieldCheck, Users, Globe, Linkedin, Mail, Award, Network, Workflow, FileCheck, Activity, CheckCircle2, Menu, X, Brain, BarChart3, ShieldAlert, LineChart, Rocket, ClipboardCheck, Briefcase, Map, Quote, ArrowRight, Image as ImageIcon, BookOpen, TrendingUp, AlertTriangle, Target, Layers, GitBranch, Settings, BarChart } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Link } from 'react-router-dom';
 import data from './data.json';
@@ -21,6 +21,7 @@ function App() {
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [isBioModalOpen, setIsBioModalOpen] = useState(false);
   const [isCertificationsModalOpen, setIsCertificationsModalOpen] = useState(false);
+  const [selectedConcept, setSelectedConcept] = useState<any>(null);
   const [selectedIllustration, setSelectedIllustration] = useState<{ title: string; image: string; description: string; items: string[] } | null>(null);
 
   useEffect(() => {
@@ -63,6 +64,58 @@ function App() {
     i18n.changeLanguage(lng);
   };
 
+  // Conceptos clickeables con sus descripciones e imágenes
+  const concepts = [
+    {
+      id: "iso-calidad",
+      title: "ISO Gestión de Calidad",
+      icon: "ShieldCheck",
+      description: "La ISO 9001:2015 es el estándar internacional para Sistemas de Gestión de Calidad (SGC). Ayuda a las organizaciones a ser más eficientes y mejorar la satisfacción del cliente. Implementar ISO 9001 demuestra compromiso con la calidad, mejora continua y estandarización de procesos.",
+      image: "/images/conferencia1.jpg",
+      benefits: ["Mayor eficiencia operativa", "Reducción de costos", "Mejora de la satisfacción del cliente", "Ventaja competitiva"]
+    },
+    {
+      id: "estructuras-empresas",
+      title: "Estructuras de Empresas",
+      icon: "Network",
+      description: "La estructura organizacional define cómo se dividen, agrupan y coordinan las tareas dentro de una empresa. Una estructura bien diseñada mejora la comunicación, la toma de decisiones y la eficiencia operativa.",
+      image: "/images/estructura-organigrama.jpg",
+      benefits: ["Claridad en roles y responsabilidades", "Mejor flujo de comunicación", "Toma de decisiones ágil", "Escalabilidad empresarial"]
+    },
+    {
+      id: "mapeo-procesos",
+      title: "Mapeo de Procesos",
+      icon: "Map",
+      description: "El mapeo de procesos es una técnica que permite visualizar gráficamente el flujo de trabajo de una organización. Identifica entradas, salidas, actividades y responsables de cada proceso.",
+      image: "/images/mapeo-procesos.jpg",
+      benefits: ["Visualización clara del trabajo", "Identificación de cuellos de botella", "Estandarización de tareas", "Base para mejora continua"]
+    },
+    {
+      id: "analisis-critico",
+      title: "Análisis Crítico",
+      icon: "Brain",
+      description: "El análisis crítico es una metodología que evalúa sistemáticamente la efectividad de los procesos y sistemas. Permite identificar áreas de mejora y tomar decisiones basadas en evidencia.",
+      image: "/images/conferencia2.jpg",
+      benefits: ["Toma de decisiones informada", "Identificación de problemas raíz", "Optimización de recursos", "Mejora continua"]
+    },
+    {
+      id: "analisis-gestion",
+      title: "Análisis de Gestión",
+      icon: "BarChart3",
+      description: "El análisis de gestión evalúa el desempeño organizacional mediante indicadores clave (KPIs). Permite medir el progreso hacia objetivos estratégicos y tomar acciones correctivas.",
+      image: "/images/conferencia1.jpg",
+      benefits: ["Medición objetiva del desempeño", "Alineación estratégica", "Identificación de tendencias", "Mejora de resultados"]
+    },
+    {
+      id: "analisis-riesgo",
+      title: "Análisis de Riesgo",
+      icon: "ShieldAlert",
+      description: "El análisis de riesgos identifica, evalúa y prioriza riesgos que podrían afectar los objetivos organizacionales. Es fundamental para la gestión proactiva y la continuidad del negocio.",
+      image: "/images/gestion-riesgo.png",
+      benefits: ["Prevención de problemas", "Toma de decisiones informada", "Protección de activos", "Cumplimiento normativo"]
+    }
+  ];
+
   // Todas las certificaciones ISO existentes
   const allCertifications = [
     { code: "ISO 9001:2015", name: "Gestión de Calidad", description: "Sistemas de Gestión de Calidad - Requisitos" },
@@ -75,17 +128,9 @@ function App() {
     { code: "ISO 26000", name: "Responsabilidad Social", description: "Guía de Responsabilidad Social" },
     { code: "ISO 37001", name: "Anti-Soborno", description: "Sistemas de Gestión Anti-Soborno" },
     { code: "ISO 22301", name: "Continuidad del Negocio", description: "Sistemas de Gestión de Continuidad del Negocio" },
-    { code: "ISO 20000-1", name: "Gestión de Servicios TI", description: "Gestión de Servicios de Tecnología de la Información" },
-    { code: "ISO 13485", name: "Dispositivos Médicos", description: "Sistemas de Gestión de Calidad para Dispositivos Médicos" },
-    { code: "IATF 16949", name: "Automotriz", description: "Sistemas de Gestión de Calidad para la Industria Automotriz" },
-    { code: "ISO 17025", name: "Laboratorios", description: "Requisitos para Laboratorios de Ensayo y Calibración" },
-    { code: "ISO 21001", name: "Educación", description: "Sistemas de Gestión para Organizaciones Educativas" },
-    { code: "ISO 28000", name: "Cadena de Suministro", description: "Sistemas de Gestión de Seguridad de la Cadena de Suministro" },
-    { code: "ISO 37000", name: "Gobierno Corporativo", description: "Guía de Buen Gobierno" },
-    { code: "ISO 42001", name: "Inteligencia Artificial", description: "Sistemas de Gestión de IA" },
   ];
 
-  // Ilustraciones para Estructuración Organizacional con tus imágenes
+  // Ilustraciones para Estructuración Organizacional
   const illustrations = [
     {
       title: "Estructuración Organizacional",
@@ -161,6 +206,81 @@ function App() {
         )}
       </AnimatePresence>
 
+      {/* ========== MODAL DE CONCEPTOS (click en badges) ========== */}
+      <AnimatePresence>
+        {selectedConcept && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[300] bg-black/95 backdrop-blur-md flex items-center justify-center p-4"
+            onClick={() => setSelectedConcept(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-[#0a0a0a] border border-white/10 rounded-3xl p-6 md:p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto relative"
+            >
+              <button 
+                onClick={() => setSelectedConcept(null)}
+                className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors z-10 bg-black/50 rounded-full p-2"
+              >
+                <X className="w-6 h-6" />
+              </button>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="rounded-2xl overflow-hidden bg-white/5">
+                  <img 
+                    src={selectedConcept.image} 
+                    alt={selectedConcept.title}
+                    className="w-full h-auto object-cover"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = '/images/conferencia2.jpg';
+                    }}
+                  />
+                </div>
+                <div>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 rounded-xl bg-red-600/10 flex items-center justify-center">
+                      {selectedConcept.icon === 'ShieldCheck' && <ShieldCheck className="w-6 h-6 text-red-500" />}
+                      {selectedConcept.icon === 'Network' && <Network className="w-6 h-6 text-red-500" />}
+                      {selectedConcept.icon === 'Map' && <Map className="w-6 h-6 text-red-500" />}
+                      {selectedConcept.icon === 'Brain' && <Brain className="w-6 h-6 text-red-500" />}
+                      {selectedConcept.icon === 'BarChart3' && <BarChart3 className="w-6 h-6 text-red-500" />}
+                      {selectedConcept.icon === 'ShieldAlert' && <ShieldAlert className="w-6 h-6 text-red-500" />}
+                    </div>
+                    <h2 className="text-2xl md:text-3xl font-bold text-white">{selectedConcept.title}</h2>
+                  </div>
+                  
+                  <p className="text-gray-300 leading-relaxed mb-6">{selectedConcept.description}</p>
+                  
+                  <div className="bg-red-600/10 border border-red-500/20 rounded-xl p-4">
+                    <h3 className="text-md font-bold text-white flex items-center gap-2 mb-3">
+                      <Award className="w-4 h-4 text-red-500" />
+                      Beneficios clave:
+                    </h3>
+                    <ul className="space-y-2">
+                      {selectedConcept.benefits.map((benefit: string, idx: number) => (
+                        <li key={idx} className="flex items-start gap-2 text-gray-300 text-sm">
+                          <CheckCircle2 className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+                          <span>{benefit}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  
+                  <div className="mt-6 pt-4 border-t border-white/10">
+                    <p className="text-gray-500 text-xs">Concepto fundamental en sistemas de gestión y calidad</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* ========== MODAL DE CERTIFICACIONES ISO ========== */}
       <AnimatePresence>
         {isCertificationsModalOpen && (
@@ -215,7 +335,7 @@ function App() {
         )}
       </AnimatePresence>
 
-      {/* ========== MODAL DE BIOGRAFÍA (+30 Años) ========== */}
+      {/* ========== MODAL DE BIOGRAFÍA ========== */}
       <AnimatePresence>
         {isBioModalOpen && (
           <motion.div
@@ -555,7 +675,7 @@ function App() {
         </div>
       </section>
 
-      {/* ========== PERFIL Y TRAYECTORIA ========== */}
+      {/* ========== PERFIL Y TRAYECTORIA CON BADGES CLICKEABLES ========== */}
       <section id="about" className="py-24 relative z-10 bg-[#0a0a0a] border-t border-white/5">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
@@ -601,13 +721,18 @@ function App() {
                 Ver biografía completa <ArrowRight className="w-4 h-4" />
               </button>
               
+              {/* BADGES CLICKEABLES */}
               <div className="flex flex-wrap gap-3">
-                {data.about.badges.slice(0, 8).map((badge, idx) => {
-                  const Icon = iconMap[badge.icon] || CheckCircle2;
+                {concepts.map((concept, idx) => {
+                  const Icon = iconMap[concept.icon] || CheckCircle2;
                   return (
-                    <div key={idx} className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:border-red-500/50 transition-colors">
-                      <Icon className="w-4 h-4 text-red-500" />
-                      <span>{badge.label}</span>
+                    <div 
+                      key={idx} 
+                      onClick={() => setSelectedConcept(concept)}
+                      className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:border-red-500/50 transition-colors cursor-pointer group"
+                    >
+                      <Icon className="w-4 h-4 text-red-500 group-hover:scale-110 transition-transform" />
+                      <span>{concept.title}</span>
                     </div>
                   )
                 })}
