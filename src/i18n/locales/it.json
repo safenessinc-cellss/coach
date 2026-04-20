@@ -1,0 +1,53 @@
+{
+  "nav": {
+    "perfil": "Profilo",
+    "servicios": "Servizi",
+    "procesos": "Processi",
+    "certificazioni": "Certificazioni",
+    "contacto": "Contatto"
+  },
+  "hero": {
+    "badge": "Soluzioni di Ingegneria & Leadership",
+    "title": "La Qualità è",
+    "titleHighlight": "Non negoziabile.",
+    "description": "Fondo la precisione tecnica dell'ingegneria con lo sviluppo del talento umano per creare aziende esponenziali."
+  },
+  "about": {
+    "badge": "Profilo Professionale",
+    "title": "Oltre 30 anni di Eccellenza",
+    "conference": "Conferenza Internazionale - Gestione della Qualità"
+  },
+  "services": {
+    "badge": "I miei Servizi",
+    "title": "Ecosistema di Soluzioni",
+    "auditorTitle": "Auditor Leader ISO",
+    "auditorDesc": "Specialista in Sistemi di Gestione della Qualità (9001) e Ambientale (14001). Oltre 30 anni a garantire l'eccellenza operativa.",
+    "coachTitle": "IBM 2025 Coach",
+    "coachDesc": "Leadership che ispira risultati.",
+    "details": "Vedi dettagli"
+  },
+  "certifications": {
+    "badge": "Lo Standard d'Oro",
+    "title": "Standard di Eccellenza",
+    "description": "Le certificazioni ISO sono lo standard d'oro per gli auditor leader."
+  },
+  "testimonials": {
+    "badge": "Casi di Successo",
+    "title": "Cosa dicono i nostri clienti",
+    "viewCase": "Vedi caso"
+  },
+  "footer": {
+    "agendar": "Prenota Consulenza"
+  },
+  "modal": {
+    "schedule": "Prenota Consulenza ISO",
+    "badgeISO": "Auditor Leader ISO",
+    "description1": "Come Auditor Leader ISO, il mio approccio va oltre la semplice conformità normativa. Implemento sistemi di gestione robusti che agiscono come motore del miglioramento continuo nella tua organizzazione.",
+    "description2": "La mia metodologia include una diagnostica approfondita (Gap Analysis), progettazione di processi personalizzati, formazione di team interni e audit di pre-certificazione.",
+    "success": "🏆 +50 certificazioni di successo",
+    "successText": "Ho guidato con successo processi di certificazione in settori che vanno dalla produzione ai servizi tecnologici, garantendo non solo il certificato, ma una vera trasformazione nella cultura della qualità dell'azienda."
+  },
+  "global": {
+    "title": "Portata Globale"
+  }
+}
