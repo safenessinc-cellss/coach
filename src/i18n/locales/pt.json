@@ -1,0 +1,50 @@
+{
+  "nav": {
+    "perfil": "Perfil",
+    "servicios": "Serviços",
+    "procesos": "Processos",
+    "certificaciones": "Certificações",
+    "contacto": "Contato"
+  },
+  "hero": {
+    "badge": "Soluções de Engenharia & Liderança",
+    "title": "A Qualidade é",
+    "titleHighlight": "Inegociável.",
+    "description": "Fusiono a precisão técnica da engenharia com o desenvolvimento do talento humano para criar empresas exponenciais."
+  },
+  "about": {
+    "badge": "Perfil Profissional",
+    "title": "Mais de 30 anos de Excelência",
+    "bio": "Profissional versátil certificado como IBM 2025 Coach com mais de 30 anos de experiência na indústria. Sólida trajetória em sistemas de gestão empresarial de qualidade e meio ambiente...",
+    "conference": "Conferência Internacional - Gestão da Qualidade"
+  },
+  "services": {
+    "badge": "Meus Serviços",
+    "title": "Ecossistema de Soluções",
+    "auditor": {
+      "title": "Auditor Líder ISO",
+      "description": "Especialista em Sistemas de Gestão da Qualidade (9001) e Ambiental (14001). Mais de 30 anos garantindo a excelência operacional."
+    },
+    "coach": {
+      "title": "IBM 2025 Coach",
+      "description": "Liderança que inspira resultados."
+    },
+    "details": "Ver detalhes"
+  },
+  "certifications": {
+    "badge": "O Padrão Ouro",
+    "title": "Padrões de Excelência",
+    "description": "As certificações ISO são o padrão ouro para auditores líderes."
+  },
+  "testimonials": {
+    "badge": "Casos de Sucesso",
+    "title": "O que nossos clientes dizem",
+    "viewCase": "Ver caso"
+  },
+  "footer": {
+    "agendar": "Agendar Consulta"
+  },
+  "modals": {
+    "schedule": "Agendar Consultoria ISO"
+  }
+}
