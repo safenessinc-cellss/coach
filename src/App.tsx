@@ -734,4 +734,4 @@ function App() {
   );
 }
 
-export default App; este es mi codigo en la imagem coferencia2 podrias hacerla mas pequena para que se aprecie to o ponerla en toda la pagina
+export default App; 
