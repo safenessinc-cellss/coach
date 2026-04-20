@@ -140,19 +140,19 @@ function App() {
         </AnimatePresence>
       </nav>
 
-      {/* ========== HERO SECTION CON IMAGEN CORPORATIVA ========== */}
+      {/* ========== HERO SECTION CON IMAGEN DE CONFERENCIA 1 ========== */}
       <section id="inicio" className="relative min-h-screen flex items-center justify-center pt-32 pb-20 px-4 overflow-hidden">
-        {/* Imagen de fondo corporativa */}
+        {/* IMAGEN 1: Robert Terán dando conferencia (fondo del Hero) */}
         <div 
           className="absolute inset-0 z-0"
           style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')",
+            backgroundImage: "url('/images/conferencia1.jpg')",
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundAttachment: 'fixed'
           }}
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/70"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/70 to-black/80"></div>
         </div>
 
         {/* Logo flotante como marca de agua */}
@@ -184,26 +184,38 @@ function App() {
         </div>
       </section>
 
-      {/* ========== PERFIL Y TRAYECTORIA ========== */}
+      {/* ========== PERFIL Y TRAYECTORIA CON IMAGEN DE CONFERENCIA 2 ========== */}
       <section id="about" className="py-24 relative z-10 bg-[#0a0a0a] border-t border-white/5">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            {/* Columna izquierda - IMAGEN 2: Robert Terán dando conferencia */}
             <div>
-             {/* Foto de perfil profesional - Coach de espaldas */}
-<div className="flex justify-center mb-8">
-  <div className="relative">
-    <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-red-500/30 ring-2 ring-white/10 shadow-2xl">
-      <img 
-        src="https://images.unsplash.com/photo-1556761175-4b46a572b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-        alt="Coach profesional dando entrenamiento"
-        className="w-full h-full object-cover object-center"
-      />
-    </div>
-    <div className="absolute -bottom-2 -right-2 bg-red-600 rounded-full p-2 border-2 border-black shadow-lg">
-      <Award className="w-4 h-4 text-white" />
-    </div>
-  </div>
-</div>
+              <div className="flex justify-center mb-8">
+                <div className="relative">
+                  {/* Imagen de conferencia 2 - Estilo profesional */}
+                  <div className="w-full max-w-md rounded-2xl overflow-hidden border-2 border-red-500/30 ring-2 ring-white/10 shadow-2xl">
+                    <img 
+                      src="/images/conferencia2.jpg" 
+                      alt="Robert Terán dando conferencia magistral sobre calidad y liderazgo"
+                      className="w-full h-auto object-cover hover:scale-105 transition-transform duration-700"
+                    />
+                  </div>
+                  {/* Badge flotante */}
+                  <div className="absolute -bottom-4 -right-4 bg-red-600 rounded-full p-3 border-2 border-black shadow-lg">
+                    <Award className="w-5 h-5 text-white" />
+                  </div>
+                  {/* Overlay con texto informativo */}
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <div className="bg-black/70 backdrop-blur-sm rounded-lg p-2 text-center">
+                      <p className="text-white text-xs font-semibold flex items-center justify-center gap-2">
+                        <Users className="w-3 h-3 text-red-400" />
+                        Conferencia Internacional - Gestión de Calidad
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
               <span className="inline-block px-4 py-1 rounded-full border border-red-500/30 bg-red-500/10 text-red-500 text-xs font-bold mb-6 tracking-[0.2em] uppercase">
                 Perfil Profesional
               </span>
@@ -225,6 +237,7 @@ function App() {
               </div>
             </div>
 
+            {/* Columna derecha - Trayectoria profesional */}
             <div className="space-y-6">
               {data.about.career.map((block, idx) => (
                 <motion.div 
@@ -622,5 +635,5 @@ function App() {
   );
 }
 
-// ✅ EXPORTACIÓN DEFAULT (¡IMPORTANTE!)
+// ✅ EXPORTACIÓN DEFAULT
 export default App;
