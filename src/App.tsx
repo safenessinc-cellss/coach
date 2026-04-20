@@ -119,7 +119,7 @@ function App() {
     },
     {
       title: "Gestión de Riesgos y Mejora",
-      image: "/images/gestion-riesgos.jpg",
+      image: "/images/gestion-riesgos.jpg.png",
       description: "Identificación y mitigación de riesgos para asegurar la mejora continua.",
       items: [
         "Elaboración de matrices de riesgos corporativos e impacto",
