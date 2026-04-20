@@ -1,4 +1,6 @@
-{
+"global": {
+  "title": "Global Reach"
+}
   "nav": {
     "perfil": "Profile",
     "servicios": "Services",
