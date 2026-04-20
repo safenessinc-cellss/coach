@@ -114,25 +114,44 @@ function App() {
                   onClick={() => changeLanguage('es')}
                   className={`block w-full text-left px-4 py-2 text-sm rounded-lg transition ${i18n.language === 'es' ? 'bg-red-600 text-white' : 'text-gray-300 hover:bg-white/10'}`}
                 >
-                  🇪🇸 Español
-                </button>
-                <button
-                  onClick={() => changeLanguage('en')}
-                  className={`block w-full text-left px-4 py-2 text-sm rounded-lg transition ${i18n.language === 'en' ? 'bg-red-600 text-white' : 'text-gray-300 hover:bg-white/10'}`}
-                >
-                  🇬🇧 English
-                </button>
-                <button
-                  onClick={() => changeLanguage('pt')}
-                  className={`block w-full text-left px-4 py-2 text-sm rounded-lg transition ${i18n.language === 'pt' ? 'bg-red-600 text-white' : 'text-gray-300 hover:bg-white/10'}`}
-                >
-                  🇵🇹 Português
-                </button>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </div>
+               {/* SECCIÓN GLOBAL REACH CORREGIDA - CON ITALIANO HABILITADO */}
+<motion.div 
+  initial={{ opacity: 0, scale: 0.95 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{ duration: 0.5, delay: 0.5 }}
+  className="md:col-span-2 glass rounded-3xl p-8 bento-card flex justify-between items-center group"
+>
+  <div className="flex flex-col gap-2">
+    <span className="text-xs text-gray-500 font-bold uppercase">{t('global.title')}</span>
+    <div className="flex gap-3 text-sm font-semibold">
+      <span 
+        onClick={() => changeLanguage('es')} 
+        className={`cursor-pointer transition ${i18n.language === 'es' ? 'text-red-500' : 'text-white hover:text-red-400'}`}
+      >
+        ES
+      </span>
+      <span 
+        onClick={() => changeLanguage('en')} 
+        className={`cursor-pointer transition ${i18n.language === 'en' ? 'text-red-500' : 'text-white hover:text-red-400'}`}
+      >
+        EN
+      </span>
+      <span 
+        onClick={() => changeLanguage('pt')} 
+        className={`cursor-pointer transition ${i18n.language === 'pt' ? 'text-red-500' : 'text-white hover:text-red-400'}`}
+      >
+        PT
+      </span>
+      <span 
+        onClick={() => changeLanguage('it')} 
+        className={`cursor-pointer transition ${i18n.language === 'it' ? 'text-red-500' : 'text-white hover:text-red-400'}`}
+      >
+        IT
+      </span>
+    </div>
+  </div>
+  <Globe className="text-gray-700 w-10 h-10 group-hover:scale-110 group-hover:text-red-500 transition-all duration-500" />
+</motion.div>
 
       {/* ========== HEADER CON LOGO CORPORATIVO ========== */}
       <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] md:w-[90%] max-w-4xl">
