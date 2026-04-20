@@ -375,6 +375,7 @@ function App() {
               <span className="text-[10px] uppercase tracking-tighter text-gray-500 font-bold mt-1">{data.metrics.label}</span>
             </motion.div>
 
+            {/* SECCIÓN GLOBAL REACH CORREGIDA */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -382,13 +383,29 @@ function App() {
               className="md:col-span-2 glass rounded-3xl p-8 bento-card flex justify-between items-center group"
             >
               <div className="flex flex-col gap-2">
-                <span className="text-xs text-gray-500 font-bold uppercase">Global Reach</span>
+                <span className="text-xs text-gray-500 font-bold uppercase">{t('global.title')}</span>
                 <div className="flex gap-3 text-sm font-semibold">
-                  {data.languages.map((lang) => (
-                    <span key={lang.code} className={lang.active ? "text-white" : "text-white/20"}>
-                      {lang.code}
-                    </span>
-                  ))}
+                  <span 
+                    onClick={() => changeLanguage('es')} 
+                    className={`cursor-pointer transition ${i18n.language === 'es' ? 'text-red-500' : 'text-white hover:text-red-400'}`}
+                  >
+                    ES
+                  </span>
+                  <span 
+                    onClick={() => changeLanguage('en')} 
+                    className={`cursor-pointer transition ${i18n.language === 'en' ? 'text-red-500' : 'text-white hover:text-red-400'}`}
+                  >
+                    EN
+                  </span>
+                  <span 
+                    onClick={() => changeLanguage('pt')} 
+                    className={`cursor-pointer transition ${i18n.language === 'pt' ? 'text-red-500' : 'text-white hover:text-red-400'}`}
+                  >
+                    PT
+                  </span>
+                  <span className="text-white/20 cursor-not-allowed">
+                    IT
+                  </span>
                 </div>
               </div>
               <Globe className="text-gray-700 w-10 h-10 group-hover:scale-110 group-hover:text-red-500 transition-all duration-500" />
@@ -585,7 +602,6 @@ function App() {
               
               {/* MODAL CON IMAGEN DE CONFERENCIA 2 */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* LADO IZQUIERDO - IMAGEN */}
                 <div className="relative rounded-2xl overflow-hidden min-h-[300px]">
                   <img 
                     src="/images/conferencia2.jpg" 
@@ -605,7 +621,6 @@ function App() {
                   </div>
                 </div>
 
-                {/* LADO DERECHO - CONTENIDO */}
                 <div>
                   <div className="flex items-center gap-4 mb-6">
                     <div className="w-14 h-14 bg-red-600/10 rounded-2xl flex items-center justify-center shrink-0">
@@ -618,13 +633,8 @@ function App() {
                   </div>
                   
                   <div className="space-y-4">
-                    <p className="text-gray-300 leading-relaxed">
-                      {t('modal.description1')}
-                    </p>
-                    
-                    <p className="text-gray-300 leading-relaxed">
-                      {t('modal.description2')}
-                    </p>
+                    <p className="text-gray-300 leading-relaxed">{t('modal.description1')}</p>
+                    <p className="text-gray-300 leading-relaxed">{t('modal.description2')}</p>
                     
                     <div className="bg-red-600/10 border border-red-500/20 rounded-xl p-4">
                       <p className="text-gray-200 text-sm leading-relaxed">
@@ -643,10 +653,7 @@ function App() {
                   </div>
                   
                   <div className="mt-8 flex justify-end">
-                    <Link 
-                      to="/agendar" 
-                      className="bg-red-600 text-white px-6 py-3 rounded-full font-bold hover:bg-red-700 transition flex items-center gap-2"
-                    >
+                    <Link to="/agendar" className="bg-red-600 text-white px-6 py-3 rounded-full font-bold hover:bg-red-700 transition flex items-center gap-2">
                       {t('modal.schedule')}
                       <ArrowRight className="w-4 h-4" />
                     </Link>
