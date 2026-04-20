@@ -1,3 +1,10 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "destination": "https://coach-iso.eu/$1",
+      "statusCode": 308,
+      "permanent": true
+    }
+  ]
 }
