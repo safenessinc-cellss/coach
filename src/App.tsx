@@ -1,7 +1,7 @@
 import { Analytics } from '@vercel/analytics/react';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ShieldCheck, Users, Globe, Linkedin, Mail, Award, Network, Workflow, FileCheck, Activity, CheckCircle2, Menu, X, Brain, BarChart3, ShieldAlert, LineChart, Rocket, ClipboardCheck, Briefcase, Map, Quote, ArrowRight, Languages } from 'lucide-react';
+import { ShieldCheck, Users, Globe, Linkedin, Mail, Award, Network, Workflow, FileCheck, Activity, CheckCircle2, Menu, X, Brain, BarChart3, ShieldAlert, LineChart, Rocket, ClipboardCheck, Briefcase, Map, Quote, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Link } from 'react-router-dom';
 import data from './data.json';
@@ -18,7 +18,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedService, setSelectedService] = useState<any>(null);
   const [selectedTestimonial, setSelectedTestimonial] = useState<any>(null);
-  const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -58,7 +57,6 @@ function App() {
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
-    setIsLangMenuOpen(false);
   };
 
   return (
@@ -93,56 +91,10 @@ function App() {
         )}
       </AnimatePresence>
 
-      {/* ========== SELECTOR DE IDIOMA FLOTANTE ========== */}
-      <div className="fixed top-20 right-4 z-50">
-        <div className="relative">
-          <button
-            onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
-            className="glass rounded-full p-2 border border-white/10 hover:border-red-500/50 transition-colors"
-          >
-            <Languages className="w-5 h-5 text-white" />
-          </button>
-          <AnimatePresence>
-            {isLangMenuOpen && (
-              <motion.div
-                initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                className="absolute top-full right-0 mt-2 glass rounded-xl border border-white/10 p-2 shadow-2xl"
-              >
-                <button
-                  onClick={() => changeLanguage('es')}
-                  className={`block w-full text-left px-4 py-2 text-sm rounded-lg transition ${i18n.language === 'es' ? 'bg-red-600 text-white' : 'text-gray-300 hover:bg-white/10'}`}
-                >
-                  🇪🇸 Español
-                </button>
-                <button
-                  onClick={() => changeLanguage('en')}
-                  className={`block w-full text-left px-4 py-2 text-sm rounded-lg transition ${i18n.language === 'en' ? 'bg-red-600 text-white' : 'text-gray-300 hover:bg-white/10'}`}
-                >
-                  🇬🇧 English
-                </button>
-                <button
-                  onClick={() => changeLanguage('pt')}
-                  className={`block w-full text-left px-4 py-2 text-sm rounded-lg transition ${i18n.language === 'pt' ? 'bg-red-600 text-white' : 'text-gray-300 hover:bg-white/10'}`}
-                >
-                  🇵🇹 Português
-                </button>
-                <button
-                  onClick={() => changeLanguage('it')}
-                  className={`block w-full text-left px-4 py-2 text-sm rounded-lg transition ${i18n.language === 'it' ? 'bg-red-600 text-white' : 'text-gray-300 hover:bg-white/10'}`}
-                >
-                  🇮🇹 Italiano
-                </button>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </div>
-
-      {/* ========== HEADER CON LOGO CORPORATIVO ========== */}
-      <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] md:w-[90%] max-w-4xl">
+      {/* ========== HEADER CON LOGO CORPORATIVO Y SELECTOR DE IDIOMA ========== */}
+      <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] md:w-[90%] max-w-5xl">
         <div className="glass rounded-full px-4 md:px-6 py-2 flex justify-between items-center border border-white/10">
+          {/* LOGO */}
           <div className="flex items-center gap-3">
             <img 
               src="/images/logo-robert-teran.png" 
@@ -155,21 +107,60 @@ function App() {
             </div>
           </div>
           
-          <div className="hidden md:flex gap-6 text-xs font-medium uppercase tracking-widest text-gray-400 items-center">
-            <a href="#about" onClick={(e) => handleNavClick(e, 'about')} className={`transition ${activeSection === 'about' ? 'text-red-500' : 'hover:text-red-500'}`}>{t('nav.perfil')}</a>
-            <a href="#services" onClick={(e) => handleNavClick(e, 'services')} className={`transition ${activeSection === 'services' ? 'text-red-500' : 'hover:text-red-500'}`}>{t('nav.servicios')}</a>
-            <a href="#procesos" onClick={(e) => handleNavClick(e, 'procesos')} className={`transition ${activeSection === 'procesos' ? 'text-red-500' : 'hover:text-red-500'}`}>{t('nav.procesos')}</a>
-            <a href="#certifications" onClick={(e) => handleNavClick(e, 'certifications')} className={`transition ${activeSection === 'certifications' ? 'text-red-500' : 'hover:text-red-500'}`}>{t('nav.certificaciones')}</a>
-            <Link to="/agendar" className="bg-white text-black px-4 py-1.5 rounded-full hover:bg-red-600 hover:text-white transition text-center">
+          {/* MENÚ DE NAVEGACIÓN + SELECTOR DE IDIOMA */}
+          <div className="hidden md:flex items-center gap-6">
+            {/* Enlaces de navegación */}
+            <div className="flex gap-6 text-xs font-medium uppercase tracking-widest text-gray-400 items-center">
+              <a href="#about" onClick={(e) => handleNavClick(e, 'about')} className={`transition ${activeSection === 'about' ? 'text-red-500' : 'hover:text-red-500'}`}>{t('nav.perfil')}</a>
+              <a href="#services" onClick={(e) => handleNavClick(e, 'services')} className={`transition ${activeSection === 'services' ? 'text-red-500' : 'hover:text-red-500'}`}>{t('nav.servicios')}</a>
+              <a href="#procesos" onClick={(e) => handleNavClick(e, 'procesos')} className={`transition ${activeSection === 'procesos' ? 'text-red-500' : 'hover:text-red-500'}`}>{t('nav.procesos')}</a>
+              <a href="#certifications" onClick={(e) => handleNavClick(e, 'certifications')} className={`transition ${activeSection === 'certifications' ? 'text-red-500' : 'hover:text-red-500'}`}>{t('nav.certificaciones')}</a>
+            </div>
+            
+            {/* Separador */}
+            <div className="w-px h-6 bg-white/20"></div>
+            
+            {/* SELECTOR DE IDIOMA EN EL HEADER */}
+            <div className="flex gap-1 text-sm font-semibold">
+              <button 
+                onClick={() => changeLanguage('es')} 
+                className={`px-2 py-1 rounded-md transition ${i18n.language === 'es' ? 'bg-red-600 text-white' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
+              >
+                ES
+              </button>
+              <button 
+                onClick={() => changeLanguage('en')} 
+                className={`px-2 py-1 rounded-md transition ${i18n.language === 'en' ? 'bg-red-600 text-white' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
+              >
+                EN
+              </button>
+              <button 
+                onClick={() => changeLanguage('pt')} 
+                className={`px-2 py-1 rounded-md transition ${i18n.language === 'pt' ? 'bg-red-600 text-white' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
+              >
+                PT
+              </button>
+              <button 
+                onClick={() => changeLanguage('it')} 
+                className={`px-2 py-1 rounded-md transition ${i18n.language === 'it' ? 'bg-red-600 text-white' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
+              >
+                IT
+              </button>
+            </div>
+            
+            {/* Botón Contacto */}
+            <Link to="/agendar" className="bg-white text-black px-4 py-1.5 rounded-full hover:bg-red-600 hover:text-white transition text-center text-xs font-medium uppercase tracking-widest">
               {t('nav.contacto')}
             </Link>
           </div>
 
+          {/* Botón Mobile */}
           <button className="md:hidden text-white p-2" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
+        {/* Menú Mobile con selector de idioma */}
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div 
@@ -182,6 +173,15 @@ function App() {
               <a href="#services" onClick={(e) => handleNavClick(e, 'services')} className={`text-sm font-bold uppercase tracking-widest px-4 py-3 rounded-xl transition ${activeSection === 'services' ? 'text-white bg-white/10' : 'text-gray-300 hover:text-white hover:bg-white/5'}`}>{t('nav.servicios')}</a>
               <a href="#procesos" onClick={(e) => handleNavClick(e, 'procesos')} className={`text-sm font-bold uppercase tracking-widest px-4 py-3 rounded-xl transition ${activeSection === 'procesos' ? 'text-white bg-white/10' : 'text-gray-300 hover:text-white hover:bg-white/5'}`}>{t('nav.procesos')}</a>
               <a href="#certifications" onClick={(e) => handleNavClick(e, 'certifications')} className={`text-sm font-bold uppercase tracking-widest px-4 py-3 rounded-xl transition ${activeSection === 'certifications' ? 'text-white bg-white/10' : 'text-gray-300 hover:text-white hover:bg-white/5'}`}>{t('nav.certificaciones')}</a>
+              
+              {/* Selector de idioma en mobile */}
+              <div className="flex gap-2 justify-center py-3 mt-2 border-t border-white/10 pt-3">
+                <button onClick={() => changeLanguage('es')} className={`px-3 py-1 rounded-md text-sm font-semibold ${i18n.language === 'es' ? 'bg-red-600 text-white' : 'text-gray-400 bg-white/5'}`}>ES</button>
+                <button onClick={() => changeLanguage('en')} className={`px-3 py-1 rounded-md text-sm font-semibold ${i18n.language === 'en' ? 'bg-red-600 text-white' : 'text-gray-400 bg-white/5'}`}>EN</button>
+                <button onClick={() => changeLanguage('pt')} className={`px-3 py-1 rounded-md text-sm font-semibold ${i18n.language === 'pt' ? 'bg-red-600 text-white' : 'text-gray-400 bg-white/5'}`}>PT</button>
+                <button onClick={() => changeLanguage('it')} className={`px-3 py-1 rounded-md text-sm font-semibold ${i18n.language === 'it' ? 'bg-red-600 text-white' : 'text-gray-400 bg-white/5'}`}>IT</button>
+              </div>
+              
               <div className="h-px w-full bg-white/10 my-2"></div>
               <Link to="/agendar" onClick={closeMenu} className="bg-red-600 text-white px-4 py-4 rounded-xl hover:bg-red-700 transition text-center font-bold uppercase tracking-widest text-sm flex items-center justify-center gap-2">
                 {t('footer.agendar')}
@@ -381,7 +381,7 @@ function App() {
               <span className="text-[10px] uppercase tracking-tighter text-gray-500 font-bold mt-1">{data.metrics.label}</span>
             </motion.div>
 
-            {/* SECCIÓN GLOBAL REACH - CON ITALIANO HABILITADO */}
+            {/* SECCIÓN GLOBAL REACH - SOLO VISUAL (SIN CLICK) */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -391,30 +391,10 @@ function App() {
               <div className="flex flex-col gap-2">
                 <span className="text-xs text-gray-500 font-bold uppercase">{t('global.title')}</span>
                 <div className="flex gap-3 text-sm font-semibold">
-                  <span 
-                    onClick={() => changeLanguage('es')} 
-                    className={`cursor-pointer transition ${i18n.language === 'es' ? 'text-red-500' : 'text-white hover:text-red-400'}`}
-                  >
-                    ES
-                  </span>
-                  <span 
-                    onClick={() => changeLanguage('en')} 
-                    className={`cursor-pointer transition ${i18n.language === 'en' ? 'text-red-500' : 'text-white hover:text-red-400'}`}
-                  >
-                    EN
-                  </span>
-                  <span 
-                    onClick={() => changeLanguage('pt')} 
-                    className={`cursor-pointer transition ${i18n.language === 'pt' ? 'text-red-500' : 'text-white hover:text-red-400'}`}
-                  >
-                    PT
-                  </span>
-                  <span 
-                    onClick={() => changeLanguage('it')} 
-                    className={`cursor-pointer transition ${i18n.language === 'it' ? 'text-red-500' : 'text-white hover:text-red-400'}`}
-                  >
-                    IT
-                  </span>
+                  <span className="text-white">ES</span>
+                  <span className="text-white">EN</span>
+                  <span className="text-white">PT</span>
+                  <span className="text-white">IT</span>
                 </div>
               </div>
               <Globe className="text-gray-700 w-10 h-10 group-hover:scale-110 group-hover:text-red-500 transition-all duration-500" />
@@ -734,4 +714,4 @@ function App() {
   );
 }
 
-export default App; 
+export default App;
