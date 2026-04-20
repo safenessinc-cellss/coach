@@ -1,8 +1,3 @@
-# Crear carpeta si no existe
-mkdir -p src/i18n/locales
-
-# Crear el archivo index.ts
-cat > src/i18n/index.ts << 'EOF'
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
@@ -23,7 +18,7 @@ i18n
   .init({
     resources,
     fallbackLng: 'es',
-    debug: true, // Ponlo en true para ver logs
+    debug: true, // Temporal para ver errores
     interpolation: {
       escapeValue: false,
     },
@@ -34,4 +29,3 @@ i18n
   });
 
 export default i18n;
-EOF
